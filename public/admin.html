@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Rhoses Tech Admin</title>
+
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>Rhoses Tech Master Admin</h1>
+
+    <button onclick="logout()">
+        Logout
+    </button>
+
+</header>
+
+<main>
+
+    <h2>Management Overview</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Schools</h3>
+            <p id="schoolCount">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Students</h3>
+            <p id="studentCount">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Staff</h3>
+            <p id="staffCount">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Parents</h3>
+            <p id="parentCount">0</p>
+        </div>
+
+    </div>
+
+    <h2>Schools Managed by Rhoses Tech</h2>
+
+    <div id="schools"></div>
+
+</main>
+
+<script>
+
+async function loadDashboard() {
+
+    const response =
+        await fetch("/api/admin/dashboard");
+
+    if (response.status === 401 ||
+        response.status === 403) {
+
+        window.location.href = "/";
+
+        return;
+    }
+
+    const data =
+        await response.json();
+
+    document.getElementById("schoolCount")
+        .textContent = data.schools.length;
+
+    document.getElementById("studentCount")
+        .textContent = data.totals.students;
+
+    document.getElementById("staffCount")
+        .textContent = data.totals.staff;
+
+    document.getElementById("parentCount")
+        .textContent = data.totals.parents;
+
+    const container =
+        document.getElementById("schools");
+
+    container.innerHTML = "";
+
+    data.schools.forEach(function(school) {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "school";
+
+        div.innerHTML = `
+            <h3>${school.name}</h3>
+            <p>Code: ${school.code}</p>
+            <p>Status: ${school.active ? "Active" : "Inactive"}</p>
+        `;
+
+        container.appendChild(div);
+
+    });
+
+}
+
+async function logout() {
+
+    await fetch("/api/logout", {
+        method: "POST"
+    });
+
+    window.location.href = "/";
+
+}
+
+loadDashboard();
+
+</script>
+
+</body>
+</html>
