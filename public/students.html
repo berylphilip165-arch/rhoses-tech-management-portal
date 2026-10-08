@@ -580,6 +580,9 @@
     const schoolName =
         params.get("school") || "School One";
 
+
+    /* DISPLAY SCHOOL NAME */
+
     document.getElementById("schoolTitle").textContent =
         schoolName;
 
@@ -587,12 +590,136 @@
         "🏫 " + schoolName + " — Student Management";
 
 
+    /* SCHOOL-SPECIFIC STORAGE */
+
+    const storageKey =
+        "students_" + schoolName;
+
+
+    /* GET STUDENTS */
+
+    let students =
+        JSON.parse(localStorage.getItem(storageKey)) || [
+
+            {
+                id: "ST001",
+                name: "John Peter",
+                gender: "Male",
+                className: "JSS 1"
+            },
+
+            {
+                id: "ST002",
+                name: "Mary James",
+                gender: "Female",
+                className: "JSS 2"
+            },
+
+            {
+                id: "ST003",
+                name: "David Paul",
+                gender: "Male",
+                className: "SS 1"
+            }
+
+        ];
+
+
+    /* SAVE STUDENTS */
+
+    function saveStudents() {
+
+        localStorage.setItem(
+            storageKey,
+            JSON.stringify(students)
+        );
+
+    }
+
+
+    /* DISPLAY STUDENTS */
+
+    function displayStudents(list = students) {
+
+        const table =
+            document.getElementById("studentTable");
+
+        table.innerHTML = "";
+
+
+        if (list.length === 0) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="6">
+                        <div class="empty">
+                            No students found.
+                        </div>
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        list.forEach((student, index) => {
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${student.id}
+                </td>
+
+                <td class="student-name">
+                    ${student.name}
+                </td>
+
+                <td>
+                    ${student.gender}
+                </td>
+
+                <td>
+                    ${student.className}
+                </td>
+
+                <td>
+                    <span class="badge">
+                        Active
+                    </span>
+                </td>
+
+                <td class="actions">
+
+                    <button
+                        class="delete"
+                        onclick="deleteStudent(${index})">
+                        🗑️
+                    </button>
+
+                </td>
+
+            `;
+
+
+            table.appendChild(row);
+
+        });
+
+    }
+
+
     /* OPEN MODAL */
 
     function openModal() {
 
-        document.getElementById("studentModal").style.display =
-            "flex";
+        document.getElementById(
+            "studentModal"
+        ).style.display = "flex";
 
     }
 
@@ -601,8 +728,9 @@
 
     function closeModal() {
 
-        document.getElementById("studentModal").style.display =
-            "none";
+        document.getElementById(
+            "studentModal"
+        ).style.display = "none";
 
     }
 
@@ -612,105 +740,182 @@
     function addStudent() {
 
         const id =
-            document.getElementById("studentId").value.trim();
+            document.getElementById(
+                "studentId"
+            ).value.trim();
+
 
         const name =
-            document.getElementById("studentName").value.trim();
+            document.getElementById(
+                "studentName"
+            ).value.trim();
+
 
         const gender =
-            document.getElementById("studentGender").value;
+            document.getElementById(
+                "studentGender"
+            ).value;
+
 
         const studentClass =
-            document.getElementById("studentClass").value;
+            document.getElementById(
+                "studentClass"
+            ).value;
 
 
         if (!id || !name || !gender || !studentClass) {
 
-            alert("Please complete all student information.");
+            alert(
+                "Please complete all student information."
+            );
 
             return;
+
         }
 
 
-        const table =
-            document.getElementById("studentTable");
+        /* CHECK DUPLICATE ID */
+
+        const exists =
+            students.some(
+                student => student.id === id
+            );
 
 
-        const row =
-            document.createElement("tr");
+        if (exists) {
+
+            alert(
+                "This Student ID already exists."
+            );
+
+            return;
+
+        }
 
 
-        row.innerHTML = `
-            <td>${id}</td>
+        /* CREATE STUDENT */
 
-            <td class="student-name">
-                ${name}
-            </td>
+        const newStudent = {
 
-            <td>${gender}</td>
+            id: id,
 
-            <td>${studentClass}</td>
+            name: name,
 
-            <td>
-                <span class="badge">
-                    Active
-                </span>
-            </td>
+            gender: gender,
 
-            <td class="actions">
-                <button class="edit">
-                    ✏️
-                </button>
+            className: studentClass
 
-                <button
-                    class="delete"
-                    onclick="this.closest('tr').remove()"
-                >
-                    🗑️
-                </button>
-            </td>
-        `;
+        };
 
 
-        table.appendChild(row);
+        students.push(newStudent);
 
 
-        document.getElementById("studentId").value = "";
-        document.getElementById("studentName").value = "";
-        document.getElementById("studentGender").value = "";
-        document.getElementById("studentClass").value = "";
+        /* SAVE */
+
+        saveStudents();
+
+
+        /* REFRESH TABLE */
+
+        displayStudents();
+
+
+        /* CLEAR FORM */
+
+        document.getElementById(
+            "studentId"
+        ).value = "";
+
+        document.getElementById(
+            "studentName"
+        ).value = "";
+
+        document.getElementById(
+            "studentGender"
+        ).value = "";
+
+        document.getElementById(
+            "studentClass"
+        ).value = "";
 
 
         closeModal();
 
+
+        alert(
+            name +
+            " has been added to " +
+            schoolName
+        );
+
     }
 
 
-    /* SEARCH STUDENTS */
+    /* DELETE STUDENT */
+
+    function deleteStudent(index) {
+
+        const student =
+            students[index];
+
+
+        const confirmDelete =
+            confirm(
+                "Delete " +
+                student.name +
+                " from " +
+                schoolName +
+                "?"
+            );
+
+
+        if (!confirmDelete) {
+
+            return;
+
+        }
+
+
+        students.splice(index, 1);
+
+
+        saveStudents();
+
+
+        displayStudents();
+
+    }
+
+
+    /* SEARCH */
 
     function searchStudents() {
 
         const search =
-            document.getElementById("searchInput")
-            .value
-            .toLowerCase();
+            document.getElementById(
+                "searchInput"
+            ).value.toLowerCase();
 
 
-        const rows =
-            document.querySelectorAll("#studentTable tr");
+        const filtered =
+            students.filter(student =>
+
+                student.name
+                    .toLowerCase()
+                    .includes(search)
+
+            );
 
 
-        rows.forEach(row => {
-
-            const name =
-                row.children[1].textContent.toLowerCase();
-
-            row.style.display =
-                name.includes(search) ? "" : "none";
-
-        });
+        displayStudents(filtered);
 
     }
+
+
+    /* INITIAL DISPLAY */
+
+    displayStudents();
 
 </script>
 
