@@ -640,7 +640,71 @@ app.get("/api/schools/:schoolId/parents", async (req, res) => {
 
 });
 
+// REGISTER A PARENT
+app.post("/api/schools/:schoolId/parents", async (req, res) => {
+    try {
+        const { schoolId } = req.params;
 
+        const {
+            full_name,
+            phone,
+            email,
+            address,
+            occupation
+        } = req.body;
+
+        // Check required fields
+        if (!full_name || !phone) {
+            return res.status(400).json({
+                success: false,
+                message: "Parent full name and phone number are required."
+            });
+        }
+
+        // Confirm that the school exists
+        const schoolResult = await pool.query(
+            "SELECT id FROM schools WHERE id = $1",
+            [schoolId]
+        );
+
+        if (schoolResult.rows.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "School not found."
+            });
+        }
+
+        // Save the parent under the selected school
+        const result = await pool.query(
+            `INSERT INTO parents
+                (school_id, full_name, phone, email, address, occupation)
+             VALUES ($1, $2, $3, $4, $5, $6)
+             RETURNING *`,
+            [
+                schoolId,
+                full_name.trim(),
+                phone.trim(),
+                email || null,
+                address || null,
+                occupation || null
+            ]
+        );
+
+        res.status(201).json({
+            success: true,
+            message: "Parent registered successfully.",
+            parent: result.rows[0]
+        });
+
+    } catch (error) {
+        console.error("Parent registration error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Unable to register parent."
+        });
+    }
+});
 // ======================================================
 // GET SCHOOL RESULTS
 // ======================================================
