@@ -4,94 +4,373 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Rhoses Tech Management</title>
+    <title>School Management System</title>
 
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="login-container">
+<div class="login-page">
 
     <div class="login-card">
 
-        <h1>Rhoses Tech Management</h1>
+        <div class="login-logo">
+            🏫
+        </div>
 
-        <p>Multi-School Management System</p>
+        <h1>School Management System</h1>
+
+        <p class="login-subtitle">
+            Manage multiple schools from one platform
+        </p>
+
+
+        <!-- LOGIN FORM -->
 
         <form id="loginForm">
 
-            <input
-                type="text"
-                id="username"
-                placeholder="Username"
-                required
-            >
+            <div class="form-group">
 
-            <input
-                type="password"
-                id="password"
-                placeholder="Password"
-                required
-            >
+                <label for="email">
+                    Email Address
+                </label>
 
-            <button type="submit">
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary login-button"
+            >
                 Login
             </button>
 
         </form>
 
-        <p id="message"></p>
+
+        <div
+            id="loginMessage"
+            class="login-message"
+        ></div>
+
+
+        <div class="demo-login">
+
+            <strong>Demo Access</strong>
+
+            <p>
+                Super Admin Dashboard
+            </p>
+
+            <button
+                type="button"
+                onclick="demoLogin()"
+                class="btn btn-secondary"
+            >
+                Enter Demo Dashboard
+            </button>
+
+        </div>
+
+
+        <div class="login-footer">
+
+            <p>
+                School Management System
+            </p>
+
+            <small>
+                Creche to SS3
+            </small>
+
+        </div>
 
     </div>
 
 </div>
 
+
 <script>
 
-const form = document.getElementById("loginForm");
+    // =====================================================
+    // DEMO LOGIN
+    // =====================================================
 
-form.addEventListener("submit", async function(event) {
+    function demoLogin() {
 
-    event.preventDefault();
-
-    const username =
-        document.getElementById("username").value;
-
-    const password =
-        document.getElementById("password").value;
-
-    const response = await fetch("/api/login", {
-
-        method: "POST",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-            username,
-            password
-        })
-
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-
-        window.location.href = data.redirect;
-
-    } else {
-
-        document.getElementById("message").textContent =
-            data.message;
+        window.location.href = "admin.html";
 
     }
 
-});
+
+    // =====================================================
+    // LOGIN FORM
+    // =====================================================
+
+    document
+        .getElementById("loginForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const password =
+                document.getElementById("password").value.trim();
+
+            const message =
+                document.getElementById("loginMessage");
+
+
+            if (!email || !password) {
+
+                message.textContent =
+                    "Please enter your email and password.";
+
+                message.className =
+                    "login-message error";
+
+                return;
+            }
+
+
+            /*
+             * For now this sends the user to the
+             * Super Admin dashboard.
+             *
+             * Real authentication will be connected
+             * to the database/backend later.
+             */
+
+            window.location.href = "admin.html";
+
+        });
 
 </script>
+
+
+<style>
+
+    /* =====================================================
+       LOGIN PAGE
+       ===================================================== */
+
+    .login-page {
+
+        min-height: 100vh;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 20px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #0f172a,
+                #1d4ed8
+            );
+
+    }
+
+
+    .login-card {
+
+        width: 100%;
+
+        max-width: 440px;
+
+        background: white;
+
+        padding: 40px;
+
+        border-radius: 18px;
+
+        box-shadow:
+            0 25px 60px rgba(0,0,0,0.25);
+
+        text-align: center;
+
+    }
+
+
+    .login-logo {
+
+        width: 70px;
+
+        height: 70px;
+
+        margin: 0 auto 20px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background: #dbeafe;
+
+        border-radius: 18px;
+
+        font-size: 35px;
+
+    }
+
+
+    .login-card h1 {
+
+        font-size: 25px;
+
+        color: #0f172a;
+
+        margin-bottom: 8px;
+
+    }
+
+
+    .login-subtitle {
+
+        color: #64748b;
+
+        font-size: 14px;
+
+        margin-bottom: 30px;
+
+    }
+
+
+    .login-card .form-group {
+
+        text-align: left;
+
+        margin-bottom: 18px;
+
+    }
+
+
+    .login-button {
+
+        width: 100%;
+
+        margin-top: 5px;
+
+    }
+
+
+    .login-message {
+
+        margin-top: 12px;
+
+        font-size: 13px;
+
+        min-height: 20px;
+
+    }
+
+
+    .login-message.error {
+
+        color: #dc2626;
+
+    }
+
+
+    .demo-login {
+
+        margin-top: 25px;
+
+        padding-top: 20px;
+
+        border-top: 1px solid #e2e8f0;
+
+    }
+
+
+    .demo-login strong {
+
+        display: block;
+
+        margin-bottom: 5px;
+
+        color: #334155;
+
+    }
+
+
+    .demo-login p {
+
+        color: #64748b;
+
+        font-size: 13px;
+
+        margin-bottom: 12px;
+
+    }
+
+
+    .login-footer {
+
+        margin-top: 30px;
+
+        color: #94a3b8;
+
+        font-size: 12px;
+
+    }
+
+
+    .login-footer p {
+
+        margin-bottom: 4px;
+
+    }
+
+
+    @media (max-width: 480px) {
+
+        .login-card {
+
+            padding: 28px 20px;
+
+        }
+
+        .login-card h1 {
+
+            font-size: 21px;
+
+        }
+
+    }
+
+</style>
 
 </body>
 </html>
