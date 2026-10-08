@@ -1,110 +1,590 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Staff Portal</title>
-
-    <link rel="stylesheet" href="/style.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teachers and Staff</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
+<div class="app">
 
-    <h1>Staff Portal</h1>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>🏫 School Portal</h2>
+            <p id="sidebarSchoolName">Loading...</p>
+        </div>
 
-    <button onclick="logout()">
-        Logout
-    </button>
+        <nav class="sidebar-nav">
+            <a id="dashboardLink" href="#" class="nav-item">
+                📊 Dashboard
+            </a>
 
-</header>
+            <a id="studentsLink" href="#" class="nav-item">
+                👨‍🎓 Students
+            </a>
 
-<main>
+            <a href="#staff" class="nav-item active">
+                👨‍🏫 Teachers & Staff
+            </a>
 
-    <h2 id="schoolName">
-        Loading...
-    </h2>
+            <a id="classesLink" href="#" class="nav-item">
+                📚 Classes & Subjects
+            </a>
 
-    <h3>Students</h3>
+            <a id="resultsLink" href="#" class="nav-item">
+                📝 Results
+            </a>
 
-    <div id="students"></div>
+            <a id="attendanceLink" href="#" class="nav-item">
+                📅 Attendance
+            </a>
 
-</main>
+            <a id="feesLink" href="#" class="nav-item">
+                💰 Fees & Payments
+            </a>
 
+            <a id="parentsLink" href="#" class="nav-item">
+                👪 Parents
+            </a>
+
+            <a href="admin.html" class="nav-item">
+                ⬅️ Super Admin
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+            <div>
+                <h1>Teachers & Staff</h1>
+                <p id="schoolSubtitle">Manage school employees</p>
+            </div>
+        </header>
+
+        <section class="page-content">
+
+            <div class="school-header card">
+                <div>
+                    <h2 id="schoolName">Loading school...</h2>
+                    <p id="schoolAddress">Loading address...</p>
+                </div>
+
+                <span class="status-badge active">Active</span>
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon">👨‍🏫</div>
+                    <div>
+                        <h3 id="totalStaff">0</h3>
+                        <p>Total Staff</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div>
+                        <h3 id="teacherCount">0</h3>
+                        <p>Teachers</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🧑‍💼</div>
+                    <div>
+                        <h3 id="otherStaffCount">0</h3>
+                        <p>Other Employees</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-header">
+                    <div>
+                        <h2>Staff Management</h2>
+                        <p>Register and manage teachers and employees.</p>
+                    </div>
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="openStaffModal()">
+                        + Add Staff
+                    </button>
+                </div>
+
+                <div class="search-bar">
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Search staff name, ID, or position..."
+                        oninput="filterStaff()">
+                </div>
+
+                <div class="form-group">
+                    <label for="departmentFilter">Filter by Department</label>
+
+                    <select id="departmentFilter" onchange="filterStaff()">
+                        <option value="">All Departments</option>
+                        <option value="Teaching">Teaching</option>
+                        <option value="Administration">Administration</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Security">Security</option>
+                        <option value="Cleaning">Cleaning</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-header">
+                    <div>
+                        <h2>Registered Staff</h2>
+                        <p><span id="staffRecordCount">0</span> employee(s)</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Staff ID</th>
+                                <th>Full Name</th>
+                                <th>Gender</th>
+                                <th>Position</th>
+                                <th>Department</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="staffTableBody">
+                            <tr>
+                                <td colspan="8">Loading staff records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </section>
+
+        <footer class="footer">
+            <p>School Management System © 2026</p>
+        </footer>
+
+    </main>
+</div>
+
+<!-- ADD STAFF MODAL -->
+<div id="staffModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <div>
+                <h2>Register Staff Member</h2>
+                <p>Enter the employee's information below.</p>
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="closeStaffModal()">
+                ×
+            </button>
+        </div>
+
+        <form id="staffForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="staffId">Staff ID *</label>
+                    <input
+                        type="text"
+                        id="staffId"
+                        required
+                        placeholder="e.g. STF001">
+                </div>
+
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input
+                        type="text"
+                        id="fullName"
+                        required
+                        placeholder="Enter full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="staffGender">Gender *</label>
+                    <select id="staffGender" required>
+                        <option value="">Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="position">Position *</label>
+                    <input
+                        type="text"
+                        id="position"
+                        required
+                        placeholder="e.g. Mathematics Teacher">
+                </div>
+
+                <div class="form-group">
+                    <label for="department">Department *</label>
+                    <select id="department" required>
+                        <option value="">Select department</option>
+                        <option value="Teaching">Teaching</option>
+                        <option value="Administration">Administration</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Security">Security</option>
+                        <option value="Cleaning">Cleaning</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="staffPhone">Phone Number</label>
+                    <input type="tel" id="staffPhone">
+                </div>
+
+                <div class="form-group">
+                    <label for="staffEmail">Email Address</label>
+                    <input type="email" id="staffEmail">
+                </div>
+
+            </div>
+
+            <div class="modal-actions">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick="closeStaffModal()">
+                    Cancel
+                </button>
+
+                <button type="submit" class="btn btn-primary">
+                    Register Staff
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
 <script>
+    // Get the selected school's ID from the page URL
+    const params = new URLSearchParams(window.location.search);
+    const schoolId = params.get("schoolId");
 
-async function loadDashboard() {
+    let staffMembers = [];
 
-    const response =
-        await fetch("/api/staff/dashboard");
+    // Protect the page from displaying HTML entered as text
+    function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, function (char) {
+            const entities = {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            };
 
-    if (!response.ok) {
-
-        window.location.href = "/";
-
-        return;
+            return entities[char];
+        });
     }
 
-    const data =
-        await response.json();
+    // Show an error message
+    function showError(message) {
+        alert(message);
+    }
 
-    document.getElementById("schoolName")
-        .textContent = data.school.name;
+    // Load the selected school's information
+    async function loadSchoolInfo() {
+        if (!schoolId) {
+            showError("No school was selected. Please open this page from the school dashboard.");
+            return;
+        }
 
-    const container =
-        document.getElementById("students");
+        try {
+            const response = await fetch("/api/schools/" + encodeURIComponent(schoolId));
 
-    container.innerHTML = "";
+            if (!response.ok) {
+                throw new Error("Could not load school information.");
+            }
 
-    data.students.forEach(function(student) {
+            const school = await response.json();
+            const name = school.name || school.school_name || "School Portal";
+            const address = school.address || "School address not provided";
 
-        const div =
-            document.createElement("div");
+            document.getElementById("schoolName").textContent = name;
+            document.getElementById("sidebarSchoolName").textContent = name;
+            document.getElementById("schoolAddress").textContent = address;
+            document.getElementById("schoolSubtitle").textContent =
+                "Manage staff at " + name;
 
-        div.className = "school";
+        } catch (error) {
+            console.error(error);
+            document.getElementById("schoolName").textContent = "School information unavailable";
+            document.getElementById("schoolAddress").textContent =
+                "Please check your server connection.";
+        }
+    }
 
-        div.innerHTML = `
-            <strong>
-                ${student.first_name}
-                ${student.last_name}
-            </strong>
+    // Set links for the selected school
+    function setupLinks() {
+        const id = encodeURIComponent(schoolId || "");
 
-            <p>
-                Admission No:
-                ${student.admission_number}
-            </p>
+        document.getElementById("dashboardLink").href =
+            "school.html?schoolId=" + id;
 
-            <p>
-                Class:
-                ${student.class_name || ""}
-            </p>
-        `;
+        document.getElementById("studentsLink").href =
+            "students.html?schoolId=" + id;
 
-        container.appendChild(div);
+        document.getElementById("classesLink").href =
+            "school.html?schoolId=" + id + "#classes";
 
-    });
+        document.getElementById("resultsLink").href =
+            "school.html?schoolId=" + id + "#results";
 
-}
+        document.getElementById("attendanceLink").href =
+            "school.html?schoolId=" + id + "#attendance";
 
-async function logout() {
+        document.getElementById("feesLink").href =
+            "school.html?schoolId=" + id + "#fees";
 
-    await fetch("/api/logout", {
-        method: "POST"
-    });
+        document.getElementById("parentsLink").href =
+            "school.html?schoolId=" + id + "#parents";
+    }
 
-    window.location.href = "/";
+    // Load all staff belonging to this school
+    async function loadStaff() {
+        const tableBody = document.getElementById("staffTableBody");
 
-}
+        if (!schoolId) {
+            tableBody.innerHTML =
+                '<tr><td colspan="8">No school selected.</td></tr>';
+            return;
+        }
 
-loadDashboard();
+        tableBody.innerHTML =
+            '<tr><td colspan="8">Loading staff records...</td></tr>';
 
+        try {
+            const response = await fetch(
+                "/api/schools/" + encodeURIComponent(schoolId) + "/staff"
+            );
+
+            if (!response.ok) {
+                throw new Error("Unable to retrieve staff records.");
+            }
+
+            const data = await response.json();
+
+            staffMembers = Array.isArray(data)
+                ? data
+                : (data.staff || data.data || []);
+
+            updateStaffStats();
+            filterStaff();
+
+        } catch (error) {
+            console.error(error);
+
+            tableBody.innerHTML =
+                '<tr><td colspan="8">Could not load staff. Check that your server is running.</td></tr>';
+        }
+    }
+
+    // Update the three staff statistics
+    function updateStaffStats() {
+        const teachers = staffMembers.filter(function (staff) {
+            const department = String(staff.department || "").toLowerCase();
+            const position = String(staff.position || "").toLowerCase();
+
+            return department === "teaching" ||
+                position.includes("teacher");
+        });
+
+        document.getElementById("totalStaff").textContent =
+            staffMembers.length;
+
+        document.getElementById("teacherCount").textContent =
+            teachers.length;
+
+        document.getElementById("otherStaffCount").textContent =
+            staffMembers.length - teachers.length;
+    }
+
+    // Search and filter staff records
+    function filterStaff() {
+        const searchTerm = document.getElementById("searchInput")
+            .value.trim().toLowerCase();
+
+        const selectedDepartment =
+            document.getElementById("departmentFilter").value;
+
+        const filteredStaff = staffMembers.filter(function (staff) {
+            const searchableText = [
+                staff.staff_id,
+                staff.full_name,
+                staff.gender,
+                staff.position,
+                staff.department,
+                staff.phone,
+                staff.email
+            ].join(" ").toLowerCase();
+
+            const matchesSearch = searchableText.includes(searchTerm);
+
+            const matchesDepartment =
+                !selectedDepartment ||
+                staff.department === selectedDepartment;
+
+            return matchesSearch && matchesDepartment;
+        });
+
+        renderStaff(filteredStaff);
+    }
+
+    // Display staff records in the table
+    function renderStaff(records) {
+        const tableBody = document.getElementById("staffTableBody");
+
+        document.getElementById("staffRecordCount").textContent =
+            records.length;
+
+        if (records.length === 0) {
+            tableBody.innerHTML =
+                '<tr><td colspan="8">No staff records found.</td></tr>';
+            return;
+        }
+
+        tableBody.innerHTML = records.map(function (staff) {
+            const status = staff.status || "Active";
+
+            return `
+                <tr>
+                    <td>${escapeHTML(staff.staff_id || "-")}</td>
+                    <td>${escapeHTML(staff.full_name || "-")}</td>
+                    <td>${escapeHTML(staff.gender || "-")}</td>
+                    <td>${escapeHTML(staff.position || "-")}</td>
+                    <td>${escapeHTML(staff.department || "-")}</td>
+                    <td>${escapeHTML(staff.phone || "-")}</td>
+                    <td>
+                        <span class="status-badge active">
+                            ${escapeHTML(status)}
+                        </span>
+                    </td>
+                    <td>—</td>
+                </tr>
+            `;
+        }).join("");
+    }
+
+    // Open the registration window
+    function openStaffModal() {
+        document.getElementById("staffModal").style.display = "flex";
+    }
+
+    // Close the registration window
+    function closeStaffModal() {
+        document.getElementById("staffModal").style.display = "none";
+    }
+
+    // Register a new staff member
+    document.getElementById("staffForm").addEventListener(
+        "submit",
+        async function (event) {
+            event.preventDefault();
+
+            if (!schoolId) {
+                showError("No school selected. Return to the school dashboard.");
+                return;
+            }
+
+            const staffData = {
+                staff_id: document.getElementById("staffId").value.trim(),
+                full_name: document.getElementById("fullName").value.trim(),
+                gender: document.getElementById("staffGender").value,
+                position: document.getElementById("position").value.trim(),
+                department: document.getElementById("department").value,
+                phone: document.getElementById("staffPhone").value.trim(),
+                email: document.getElementById("staffEmail").value.trim()
+            };
+
+            const submitButton = this.querySelector(
+                'button[type="submit"]'
+            );
+
+            submitButton.disabled = true;
+            submitButton.textContent = "Registering...";
+
+            try {
+                const response = await fetch(
+                    "/api/schools/" + encodeURIComponent(schoolId) + "/staff",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(staffData)
+                    }
+                );
+
+                const result = await response.json().catch(function () {
+                    return {};
+                });
+
+                if (!response.ok) {
+                    throw new Error(
+                        result.error ||
+                        result.message ||
+                        "Staff registration failed."
+                    );
+                }
+
+                alert("Staff member registered successfully!");
+
+                document.getElementById("staffForm").reset();
+                closeStaffModal();
+                await loadStaff();
+
+            } catch (error) {
+                console.error(error);
+                showError(error.message || "Could not register staff.");
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = "Register Staff";
+            }
+        }
+    );
+
+    // Mobile sidebar toggle
+    function toggleSidebar() {
+        document.querySelector(".sidebar").classList.toggle("active");
+    }
+
+    // Start the page
+    setupLinks();
+    loadSchoolInfo();
+    loadStaff();
 </script>
 
 </body>
