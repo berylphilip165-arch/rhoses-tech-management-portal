@@ -462,7 +462,7 @@
         tableBody.innerHTML = records.map(function (parent) {
             return `
                 <tr>
-                    <td>${escapeHTML(parent.parent_id || "-")}</td>
+                    <td>${escapeHTML(parent.id || "-")}</td>
                     <td>${escapeHTML(parent.full_name || "-")}</td>
                     <td>${escapeHTML(parent.phone || "-")}</td>
                     <td>${escapeHTML(parent.email || "-")}</td>
