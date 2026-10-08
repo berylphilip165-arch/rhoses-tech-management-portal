@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Staff Portal</title>
+
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>Staff Portal</h1>
+
+    <button onclick="logout()">
+        Logout
+    </button>
+
+</header>
+
+<main>
+
+    <h2 id="schoolName">
+        Loading...
+    </h2>
+
+    <h3>Students</h3>
+
+    <div id="students"></div>
+
+</main>
+
+<script>
+
+async function loadDashboard() {
+
+    const response =
+        await fetch("/api/staff/dashboard");
+
+    if (!response.ok) {
+
+        window.location.href = "/";
+
+        return;
+    }
+
+    const data =
+        await response.json();
+
+    document.getElementById("schoolName")
+        .textContent = data.school.name;
+
+    const container =
+        document.getElementById("students");
+
+    container.innerHTML = "";
+
+    data.students.forEach(function(student) {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "school";
+
+        div.innerHTML = `
+            <strong>
+                ${student.first_name}
+                ${student.last_name}
+            </strong>
+
+            <p>
+                Admission No:
+                ${student.admission_number}
+            </p>
+
+            <p>
+                Class:
+                ${student.class_name || ""}
+            </p>
+        `;
+
+        container.appendChild(div);
+
+    });
+
+}
+
+async function logout() {
+
+    await fetch("/api/logout", {
+        method: "POST"
+    });
+
+    window.location.href = "/";
+
+}
+
+loadDashboard();
+
+</script>
+
+</body>
+</html>
