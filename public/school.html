@@ -409,5 +409,66 @@
 
 </div>
 
+<script>
+
+    const params = new URLSearchParams(window.location.search);
+
+    const schoolName = params.get("school") || "School One";
+
+    const schoolData = {
+        "School One": {
+            students: 250,
+            teachers: 18,
+            classes: 12,
+            parents: 210
+        },
+
+        "School Two": {
+            students: 310,
+            teachers: 22,
+            classes: 15,
+            parents: 270
+        },
+
+        "School Three": {
+            students: 180,
+            teachers: 15,
+            classes: 10,
+            parents: 150
+        },
+
+        "School Four": {
+            students: 275,
+            teachers: 17,
+            classes: 13,
+            parents: 230
+        },
+
+        "School Five": {
+            students: 235,
+            teachers: 13,
+            classes: 11,
+            parents: 195
+        }
+    };
+
+    const data = schoolData[schoolName] || schoolData["School One"];
+
+    document.querySelector(".school-header h2").textContent =
+        "🏫 " + schoolName;
+
+    document.querySelector(".card:nth-child(1) h2").textContent =
+        data.students;
+
+    document.querySelector(".card:nth-child(2) h2").textContent =
+        data.teachers;
+
+    document.querySelector(".card:nth-child(3) h2").textContent =
+        data.classes;
+
+    document.querySelector(".card:nth-child(4) h2").textContent =
+        data.parents;
+
+</script>
 </body>
 </html>
