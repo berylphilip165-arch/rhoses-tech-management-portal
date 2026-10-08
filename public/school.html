@@ -3,297 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>School Management</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background: #f4f7fb;
-            color: #172033;
-        }
-
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* SIDEBAR */
-        .sidebar {
-            width: 240px;
-            background: #0f172a;
-            color: white;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            padding: 20px 15px;
-        }
-
-        .logo {
-            text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #334155;
-            margin-bottom: 20px;
-        }
-
-        .logo h2 {
-            font-size: 20px;
-        }
-
-        .logo p {
-            color: #94a3b8;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        .back {
-            display: block;
-            color: #cbd5e1;
-            text-decoration: none;
-            padding: 11px;
-            margin-bottom: 15px;
-            border-radius: 7px;
-        }
-
-        .back:hover {
-            background: #1e293b;
-        }
-
-        .menu a {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            padding: 12px;
-            color: #cbd5e1;
-            text-decoration: none;
-            border-radius: 7px;
-            margin-bottom: 5px;
-        }
-
-        .menu a:hover,
-        .menu a.active {
-            background: #2563eb;
-            color: white;
-        }
-
-        /* MAIN */
-        .main {
-            margin-left: 240px;
-            width: calc(100% - 240px);
-        }
-
-        .topbar {
-            background: white;
-            height: 70px;
-            padding: 0 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .topbar h1 {
-            font-size: 22px;
-        }
-
-        .content {
-            padding: 30px;
-        }
-
-        .school-header {
-            background: #2563eb;
-            color: white;
-            border-radius: 14px;
-            padding: 25px;
-            margin-bottom: 25px;
-        }
-
-        .school-header h2 {
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .school-header p {
-            opacity: 0.9;
-        }
-
-        /* STATISTICS */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-        }
-
-        .card p {
-            color: #64748b;
-            margin-bottom: 8px;
-        }
-
-        .card h2 {
-            font-size: 27px;
-        }
-
-        /* MODULES */
-        .section-title {
-            margin-bottom: 15px;
-        }
-
-        .modules {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-        }
-
-        .module {
-            background: white;
-            padding: 25px 15px;
-            text-align: center;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-            cursor: pointer;
-        }
-
-        .module:hover {
-            transform: translateY(-3px);
-        }
-
-        .module-icon {
-            font-size: 35px;
-            margin-bottom: 12px;
-        }
-
-        .module h3 {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .module p {
-            font-size: 12px;
-            color: #64748b;
-        }
-
-        @media (max-width: 900px) {
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .modules {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .sidebar {
-                width: 70px;
-                padding: 15px 8px;
-            }
-
-            .logo h2,
-            .logo p,
-            .back span,
-            .menu a span {
-                display: none;
-            }
-
-            .menu a {
-                justify-content: center;
-                font-size: 20px;
-            }
-
-            .main {
-                margin-left: 70px;
-                width: calc(100% - 70px);
-            }
-
-            .content {
-                padding: 15px;
-            }
-
-            .topbar {
-                padding: 0 15px;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .modules {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-    </style>
+    <title>School Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="layout">
+<div class="app">
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
 
-        <div class="logo">
-            <h2>🏫 SCHOOL HUB</h2>
-            <p>School Management</p>
+        <div class="sidebar-header">
+            <h2>🏫 School Portal</h2>
+            <p id="sidebarSchoolName">Loading...</p>
         </div>
 
-        <a href="admin.html" class="back">
-            ← <span>Back to Super Admin</span>
-        </a>
+        <nav class="sidebar-nav">
 
-        <nav class="menu">
-
-            <a href="#" class="active">
-                📊 <span>Dashboard</span>
-            
-<a href="students.html?school=School%20One">
-    👨‍🎓 <span>Students</span>
-</a>
-
-            <a href="#">
-                👨‍🏫 <span>Teachers</span>
+            <a href="#dashboard" class="nav-item active">
+                📊 Dashboard
             </a>
 
-            <a href="#">
-                📚 <span>Classes</span>
+            <a id="studentsLink" href="#" class="nav-item">
+                👨‍🎓 Students
             </a>
 
-            <a href="#">
-                📝 <span>Results</span>
+            <a id="staffLink" href="#" class="nav-item">
+                👨‍🏫 Teachers & Staff
             </a>
 
-            <a href="#">
-                📅 <span>Attendance</span>
+            <a href="#classes" class="nav-item">
+                📚 Classes & Subjects
             </a>
 
-            <a href="#">
-                💰 <span>Fees</span>
+            <a href="#results" class="nav-item">
+                📝 Results
             </a>
 
-            <a href="#">
-                👪 <span>Parents</span>
+            <a href="#attendance" class="nav-item">
+                📅 Attendance
             </a>
 
-            <a href="#">
-                📈 <span>Reports</span>
+            <a href="#fees" class="nav-item">
+                💰 Fees & Payments
             </a>
 
-            <a href="#">
-                ⚙️ <span>Settings</span>
+            <a href="#parents" class="nav-item">
+                👪 Parents
+            </a>
+
+            <a href="#reports" class="nav-item">
+                📈 Reports
+            </a>
+
+            <a href="#settings" class="nav-item">
+                ⚙️ School Settings
+            </a>
+
+            <a href="admin.html" class="nav-item">
+                ⬅️ Back to Super Admin
             </a>
 
         </nav>
@@ -301,173 +70,723 @@
     </aside>
 
 
-    <!-- MAIN -->
-    <main class="main">
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
 
+        <!-- TOP BAR -->
         <header class="topbar">
-            <h1>School Management</h1>
-            <strong>Super Admin</strong>
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div>
+                <h1 id="schoolTitle">School Dashboard</h1>
+                <p id="schoolSubtitle">
+                    Manage your school from one place
+                </p>
+            </div>
+
         </header>
 
 
-        <section class="content">
+        <!-- PAGE CONTENT -->
+        <section class="page-content">
 
-            <div class="school-header">
-                <h2>🏫 School One</h2>
-                <p>Manage students, teachers, classes, results and other school activities.</p>
+            <!-- SCHOOL HEADER -->
+            <div class="school-header card">
+
+                <div>
+                    <h2 id="welcomeSchoolName">
+                        Loading school...
+                    </h2>
+
+                    <p id="schoolAddress">
+                        Loading address...
+                    </p>
+
+                    <p id="schoolContact">
+                        Loading contact information...
+                    </p>
+                </div>
+
+                <div>
+                    <span class="status-badge active">
+                        Active
+                    </span>
+                </div>
+
             </div>
 
 
             <!-- STATISTICS -->
-            <div class="stats">
+            <div class="stats-grid">
 
-                <div class="card">
-                    <p>Total Students</p>
-                    <h2>250</h2>
+                <div class="stat-card">
+                    <div class="stat-icon">👨‍🎓</div>
+
+                    <div>
+                        <h3 id="totalStudents">0</h3>
+                        <p>Total Students</p>
+                    </div>
                 </div>
 
-                <div class="card">
-                    <p>Total Teachers</p>
-                    <h2>18</h2>
+
+                <div class="stat-card">
+                    <div class="stat-icon">👨‍🏫</div>
+
+                    <div>
+                        <h3 id="totalStaff">0</h3>
+                        <p>Teachers & Staff</p>
+                    </div>
                 </div>
 
-                <div class="card">
-                    <p>Total Classes</p>
-                    <h2>12</h2>
+
+                <div class="stat-card">
+                    <div class="stat-icon">👪</div>
+
+                    <div>
+                        <h3 id="totalParents">0</h3>
+                        <p>Parents</p>
+                    </div>
                 </div>
 
-                <div class="card">
-                    <p>Parents</p>
-                    <h2>210</h2>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+
+                    <div>
+                        <h3 id="totalClasses">0</h3>
+                        <p>Classes</p>
+                    </div>
                 </div>
 
             </div>
 
 
-            <h2 class="section-title">
-                School Management
-            </h2>
+            <!-- QUICK ACTIONS -->
+            <div class="card">
 
-
-            <!-- MODULES -->
-            <div class="modules">
-
-                <div class="module">
-                    <div class="module-icon">👨‍🎓</div>
-                    <h3>Students</h3>
-                    <p>Manage students</p>
+                <div class="card-header">
+                    <div>
+                        <h2>Quick Actions</h2>
+                        <p>Common school management tasks</p>
+                    </div>
                 </div>
 
-                <div class="module">
-                    <div class="module-icon">👨‍🏫</div>
-                    <h3>Teachers</h3>
-                    <p>Manage teachers</p>
+                <div class="quick-actions">
+
+                    <button
+                        class="quick-action"
+                        onclick="openStudents()">
+                        👨‍🎓
+                        <span>Add Student</span>
+                    </button>
+
+                    <button
+                        class="quick-action"
+                        onclick="openStaff()">
+                        👨‍🏫
+                        <span>Add Teacher / Staff</span>
+                    </button>
+
+                    <button
+                        class="quick-action"
+                        onclick="showClasses()">
+                        📚
+                        <span>View Classes</span>
+                    </button>
+
+                    <button
+                        class="quick-action"
+                        onclick="showResults()">
+                        📝
+                        <span>Enter Results</span>
+                    </button>
+
+                    <button
+                        class="quick-action"
+                        onclick="showAttendance()">
+                        📅
+                        <span>Attendance</span>
+                    </button>
+
+                    <button
+                        class="quick-action"
+                        onclick="showFees()">
+                        💰
+                        <span>Fees</span>
+                    </button>
+
                 </div>
 
-                <div class="module">
-                    <div class="module-icon">📚</div>
-                    <h3>Classes</h3>
-                    <p>Manage classes</p>
+            </div>
+
+
+            <!-- CLASS LEVELS -->
+            <div class="card" id="classes">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Classes</h2>
+                        <p>
+                            All class levels in this school
+                        </p>
+                    </div>
+
                 </div>
 
-                <div class="module">
-                    <div class="module-icon">📝</div>
-                    <h3>Results</h3>
-                    <p>Manage results</p>
+                <div
+                    id="classesContainer"
+                    class="grid">
+                    
+                    <div class="loading">
+                        Loading classes...
+                    </div>
+
                 </div>
 
-                <div class="module">
-                    <div class="module-icon">📅</div>
-                    <h3>Attendance</h3>
-                    <p>Track attendance</p>
+            </div>
+
+
+            <!-- SCHOOL INFORMATION -->
+            <div class="card" id="settings">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>School Information</h2>
+                        <p>
+                            Basic information about this school
+                        </p>
+                    </div>
+
                 </div>
 
-                <div class="module">
-                    <div class="module-icon">💰</div>
-                    <h3>Fees</h3>
-                    <p>Manage payments</p>
+                <div class="info-grid">
+
+                    <div>
+                        <strong>School Name</strong>
+                        <p id="infoSchoolName">-</p>
+                    </div>
+
+                    <div>
+                        <strong>Address</strong>
+                        <p id="infoSchoolAddress">-</p>
+                    </div>
+
+                    <div>
+                        <strong>Phone</strong>
+                        <p id="infoSchoolPhone">-</p>
+                    </div>
+
+                    <div>
+                        <strong>Email</strong>
+                        <p id="infoSchoolEmail">-</p>
+                    </div>
+
                 </div>
 
-                <div class="module">
-                    <div class="module-icon">👪</div>
-                    <h3>Parents</h3>
-                    <p>Manage parents</p>
+            </div>
+
+
+            <!-- OTHER MODULES -->
+            <div class="card" id="reports">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>School Management Modules</h2>
+                        <p>
+                            More modules will be connected here
+                        </p>
+                    </div>
+
                 </div>
 
-                <div class="module">
-                    <div class="module-icon">📈</div>
-                    <h3>Reports</h3>
-                    <p>View school reports</p>
+                <div class="grid">
+
+                    <div class="module-card">
+                        <h3>📝 Results</h3>
+                        <p>
+                            Manage student academic results.
+                        </p>
+                    </div>
+
+                    <div class="module-card">
+                        <h3>📅 Attendance</h3>
+                        <p>
+                            Track daily student attendance.
+                        </p>
+                    </div>
+
+                    <div class="module-card">
+                        <h3>💰 Fees</h3>
+                        <p>
+                            Manage school fees and payments.
+                        </p>
+                    </div>
+
+                    <div class="module-card">
+                        <h3>👪 Parents</h3>
+                        <p>
+                            Manage parents and guardians.
+                        </p>
+                    </div>
+
                 </div>
 
             </div>
 
         </section>
 
+
+        <footer class="footer">
+            <p>
+                School Management System © 2026
+            </p>
+        </footer>
+
     </main>
 
 </div>
-
 <script>
 
-    const params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search);
+const schoolId = params.get("schoolId");
 
-    const schoolName = params.get("school") || "School One";
 
-    const schoolData = {
-        "School One": {
-            students: 250,
-            teachers: 18,
-            classes: 12,
-            parents: 210
-        },
+/* ================================
+   CHECK SCHOOL ID
+================================ */
 
-        "School Two": {
-            students: 310,
-            teachers: 22,
-            classes: 15,
-            parents: 270
-        },
+if (!schoolId) {
+    alert("No school was selected.");
+    window.location.href = "admin.html";
+}
 
-        "School Three": {
-            students: 180,
-            teachers: 15,
-            classes: 10,
-            parents: 150
-        },
 
-        "School Four": {
-            students: 275,
-            teachers: 17,
-            classes: 13,
-            parents: 230
-        },
+/* ================================
+   SIDEBAR
+================================ */
 
-        "School Five": {
-            students: 235,
-            teachers: 13,
-            classes: 11,
-            parents: 195
+function toggleSidebar() {
+    const sidebar = document.querySelector(".sidebar");
+
+    if (sidebar) {
+        sidebar.classList.toggle("open");
+    }
+}
+
+
+/* ================================
+   LOAD SCHOOL INFORMATION
+================================ */
+
+async function loadSchool() {
+
+    try {
+
+        const response = await fetch(
+            `/api/schools/${schoolId}`
+        );
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(
+                data.message || "Unable to load school"
+            );
         }
-    };
 
-    const data = schoolData[schoolName] || schoolData["School One"];
+        const school = data.school;
 
-    document.querySelector(".school-header h2").textContent =
-        "🏫 " + schoolName;
 
-    document.querySelector(".card:nth-child(1) h2").textContent =
-        data.students;
+        /* School name */
 
-    document.querySelector(".card:nth-child(2) h2").textContent =
-        data.teachers;
+        document.getElementById(
+            "sidebarSchoolName"
+        ).textContent = school.name;
 
-    document.querySelector(".card:nth-child(3) h2").textContent =
-        data.classes;
+        document.getElementById(
+            "schoolTitle"
+        ).textContent = school.name;
 
-    document.querySelector(".card:nth-child(4) h2").textContent =
-        data.parents;
+        document.getElementById(
+            "welcomeSchoolName"
+        ).textContent = school.name;
+
+
+        /* Address */
+
+        document.getElementById(
+            "schoolAddress"
+        ).textContent =
+            school.address ||
+            "School address not provided";
+
+
+        /* Contact */
+
+        const phone =
+            school.phone || "No phone number";
+
+        const email =
+            school.email || "No email address";
+
+        document.getElementById(
+            "schoolContact"
+        ).textContent =
+            `${phone} • ${email}`;
+
+
+        /* Information section */
+
+        document.getElementById(
+            "infoSchoolName"
+        ).textContent = school.name;
+
+        document.getElementById(
+            "infoSchoolAddress"
+        ).textContent =
+            school.address || "-";
+
+        document.getElementById(
+            "infoSchoolPhone"
+        ).textContent =
+            school.phone || "-";
+
+        document.getElementById(
+            "infoSchoolEmail"
+        ).textContent =
+            school.email || "-";
+
+
+        /* Page title */
+
+        document.title =
+            `${school.name} - School Dashboard`;
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to load school information."
+        );
+
+    }
+
+}
+
+
+/* ================================
+   LOAD DASHBOARD STATISTICS
+================================ */
+
+async function loadDashboard() {
+
+    try {
+
+        const response = await fetch(
+            `/api/schools/${schoolId}/dashboard`
+        );
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(
+                data.message ||
+                "Unable to load dashboard"
+            );
+        }
+
+        const dashboard = data.dashboard;
+
+
+        document.getElementById(
+            "totalStudents"
+        ).textContent =
+            dashboard.students || 0;
+
+
+        document.getElementById(
+            "totalStaff"
+        ).textContent =
+            dashboard.staff || 0;
+
+
+        document.getElementById(
+            "totalParents"
+        ).textContent =
+            dashboard.parents || 0;
+
+
+        document.getElementById(
+            "totalClasses"
+        ).textContent =
+            dashboard.classes || 0;
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "totalStudents"
+        ).textContent = "0";
+
+        document.getElementById(
+            "totalStaff"
+        ).textContent = "0";
+
+        document.getElementById(
+            "totalParents"
+        ).textContent = "0";
+
+        document.getElementById(
+            "totalClasses"
+        ).textContent = "0";
+
+    }
+
+}
+
+
+/* ================================
+   LOAD CLASSES
+================================ */
+
+async function loadClasses() {
+
+    const container =
+        document.getElementById(
+            "classesContainer"
+        );
+
+    try {
+
+        const response = await fetch(
+            `/api/schools/${schoolId}/classes`
+        );
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(
+                data.message ||
+                "Unable to load classes"
+            );
+        }
+
+        const classes = data.classes;
+
+
+        if (!classes.length) {
+
+            container.innerHTML = `
+                <div class="empty-state">
+                    <h3>No classes found</h3>
+                    <p>
+                        Classes have not been created
+                        for this school yet.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML =
+            classes.map(classItem => `
+
+                <div class="module-card">
+
+                    <h3>
+                        📚
+                        ${escapeHtml(
+                            classItem.class_name
+                        )}
+                    </h3>
+
+                    <p>
+                        Manage students and academic
+                        information for this class.
+                    </p>
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="openStudents(
+                            '${encodeURIComponent(
+                                classItem.class_name
+                            )}'
+                        )">
+
+                        View Students
+
+                    </button>
+
+                </div>
+
+            `).join("");
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        container.innerHTML = `
+            <div class="alert alert-error">
+                Unable to load classes.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* ================================
+   STUDENTS
+================================ */
+
+function openStudents(className = "") {
+
+    let url =
+        `students.html?schoolId=${encodeURIComponent(
+            schoolId
+        )}`;
+
+    if (className) {
+
+        url +=
+            `&className=${className}`;
+
+    }
+
+    window.location.href = url;
+
+}
+
+
+/* ================================
+   STAFF
+================================ */
+
+function openStaff() {
+
+    window.location.href =
+        `staff.html?schoolId=${encodeURIComponent(
+            schoolId
+        )}`;
+
+}
+
+
+/* ================================
+   OTHER MODULES
+================================ */
+
+function showClasses() {
+
+    document.getElementById(
+        "classes"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+function showResults() {
+
+    alert(
+        "Results module will be connected next."
+    );
+
+}
+
+
+function showAttendance() {
+
+    alert(
+        "Attendance module will be connected next."
+    );
+
+}
+
+
+function showFees() {
+
+    alert(
+        "Fees module will be connected next."
+    );
+
+}
+
+
+/* ================================
+   ESCAPE HTML
+================================ */
+
+function escapeHtml(value) {
+
+    return String(value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* ================================
+   CONNECT SIDEBAR LINKS
+================================ */
+
+document.getElementById(
+    "studentsLink"
+).href =
+    `students.html?schoolId=${encodeURIComponent(
+        schoolId
+    )}`;
+
+
+document.getElementById(
+    "staffLink"
+).href =
+    `staff.html?schoolId=${encodeURIComponent(
+        schoolId
+    )}`;
+
+
+/* ================================
+   START DASHBOARD
+================================ */
+
+async function initializeDashboard() {
+
+    await loadSchool();
+
+    await loadDashboard();
+
+    await loadClasses();
+
+}
+
+
+initializeDashboard();
 
 </script>
+
 </body>
 </html>
