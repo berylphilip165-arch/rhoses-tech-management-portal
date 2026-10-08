@@ -4,399 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Students | School Management</title>
+    <title>Students</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background: #f4f7fb;
-            color: #172033;
-        }
-
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* SIDEBAR */
-        .sidebar {
-            width: 240px;
-            background: #0f172a;
-            color: white;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            padding: 20px 15px;
-        }
-
-        .logo {
-            text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #334155;
-            margin-bottom: 20px;
-        }
-
-        .logo h2 {
-            font-size: 19px;
-        }
-
-        .logo p {
-            color: #94a3b8;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        .back {
-            display: block;
-            color: #cbd5e1;
-            text-decoration: none;
-            padding: 11px;
-            margin-bottom: 15px;
-            border-radius: 7px;
-        }
-
-        .back:hover {
-            background: #1e293b;
-        }
-
-        .menu a {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            padding: 12px;
-            color: #cbd5e1;
-            text-decoration: none;
-            border-radius: 7px;
-            margin-bottom: 5px;
-        }
-
-        .menu a:hover,
-        .menu a.active {
-            background: #2563eb;
-            color: white;
-        }
-
-        /* MAIN */
-        .main {
-            margin-left: 240px;
-            width: calc(100% - 240px);
-        }
-
-        .topbar {
-            background: white;
-            min-height: 70px;
-            padding: 12px 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .topbar h1 {
-            font-size: 22px;
-        }
-
-        .content {
-            padding: 30px;
-        }
-
-        .school-name {
-            color: #2563eb;
-            font-size: 14px;
-            margin-bottom: 6px;
-        }
-
-        /* ACTION BAR */
-        .action-bar {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-        }
-
-        .search-box {
-            flex: 1;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            outline: none;
-            font-size: 14px;
-        }
-
-        .search-box input:focus {
-            border-color: #2563eb;
-        }
-
-        .add-btn {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 12px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            white-space: nowrap;
-        }
-
-        .add-btn:hover {
-            background: #1d4ed8;
-        }
-
-        /* TABLE */
-        .table-card {
-            background: white;
-            border-radius: 12px;
-            overflow-x: auto;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 700px;
-        }
-
-        th,
-        td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        th {
-            background: #f8fafc;
-            color: #475569;
-            font-size: 13px;
-        }
-
-        td {
-            font-size: 14px;
-        }
-
-        .student-name {
-            font-weight: bold;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 5px 9px;
-            border-radius: 20px;
-            background: #dcfce7;
-            color: #166534;
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        .actions button {
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 17px;
-            margin-right: 8px;
-        }
-
-        .edit {
-            color: #2563eb;
-        }
-
-        .delete {
-            color: #dc2626;
-        }
-
-        /* EMPTY STATE */
-        .empty {
-            text-align: center;
-            padding: 45px 20px;
-            color: #64748b;
-        }
-
-        /* MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.6);
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            z-index: 100;
-        }
-
-        .modal-box {
-            background: white;
-            width: 100%;
-            max-width: 500px;
-            border-radius: 14px;
-            padding: 25px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-box h2 {
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 11px;
-            border: 1px solid #cbd5e1;
-            border-radius: 7px;
-            outline: none;
-        }
-
-        .form-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .cancel-btn {
-            padding: 11px 17px;
-            border: 1px solid #cbd5e1;
-            background: white;
-            border-radius: 7px;
-            cursor: pointer;
-        }
-
-        .save-btn {
-            padding: 11px 17px;
-            border: none;
-            background: #2563eb;
-            color: white;
-            border-radius: 7px;
-            cursor: pointer;
-        }
-
-        /* MOBILE */
-        @media (max-width: 700px) {
-
-            .sidebar {
-                width: 70px;
-                padding: 15px 8px;
-            }
-
-            .logo h2,
-            .logo p,
-            .back span,
-            .menu a span {
-                display: none;
-            }
-
-            .menu a {
-                justify-content: center;
-                font-size: 20px;
-            }
-
-            .main {
-                margin-left: 70px;
-                width: calc(100% - 70px);
-            }
-
-            .content {
-                padding: 15px;
-            }
-
-            .topbar {
-                padding: 12px 15px;
-            }
-
-            .topbar h1 {
-                font-size: 18px;
-            }
-
-            .action-bar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .add-btn {
-                width: 100%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="layout">
+<div class="app">
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
 
-        <div class="logo">
-            <h2>🏫 SCHOOL HUB</h2>
-            <p>School Management</p>
+        <div class="sidebar-header">
+            <h2>🏫 School Portal</h2>
+
+            <p id="sidebarSchoolName">
+                Loading...
+            </p>
         </div>
 
-        <a href="school.html" class="back">
-            ← <span>Back to School</span>
-        </a>
+        <nav class="sidebar-nav">
 
-        <nav class="menu">
-
-            <a href="school.html">
-                📊 <span>Dashboard</span>
+            <a id="dashboardLink"
+               href="#"
+               class="nav-item">
+                📊 Dashboard
             </a>
 
-            <a href="#" class="active">
-                👨‍🎓 <span>Students</span>
+            <a href="#students"
+               class="nav-item active">
+                👨‍🎓 Students
             </a>
 
-            <a href="#">
-                👨‍🏫 <span>Teachers</span>
+            <a id="staffLink"
+               href="#"
+               class="nav-item">
+                👨‍🏫 Teachers & Staff
             </a>
 
-            <a href="#">
-                📚 <span>Classes</span>
+            <a href="#classes"
+               class="nav-item">
+                📚 Classes & Subjects
             </a>
 
-            <a href="#">
-                📝 <span>Results</span>
+            <a href="#results"
+               class="nav-item">
+                📝 Results
             </a>
 
-            <a href="#">
-                📅 <span>Attendance</span>
+            <a href="#attendance"
+               class="nav-item">
+                📅 Attendance
             </a>
 
-            <a href="#">
-                💰 <span>Fees</span>
+            <a href="#fees"
+               class="nav-item">
+                💰 Fees & Payments
             </a>
 
-            <a href="#">
-                👪 <span>Parents</span>
+            <a href="#parents"
+               class="nav-item">
+                👪 Parents
             </a>
 
-            <a href="#">
-                📈 <span>Reports</span>
+            <a href="#reports"
+               class="nav-item">
+                📈 Reports
+            </a>
+
+            <a href="admin.html"
+               class="nav-item">
+                ⬅️ Super Admin
             </a>
 
         </nav>
@@ -404,106 +83,288 @@
     </aside>
 
 
-    <!-- MAIN -->
-    <main class="main">
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
 
+        <!-- TOP BAR -->
         <header class="topbar">
-            <h1>Students</h1>
-            <strong id="schoolTitle">School One</strong>
+
+            <button
+                class="menu-btn"
+                onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div>
+
+                <h1>Students</h1>
+
+                <p id="schoolSubtitle">
+                    Manage students
+                </p>
+
+            </div>
+
         </header>
 
 
-        <section class="content">
+        <!-- PAGE CONTENT -->
+        <section class="page-content">
 
-            <div class="school-name" id="schoolSubtitle">
-                🏫 School One — Student Management
+
+            <!-- SCHOOL HEADER -->
+            <div class="school-header card">
+
+                <div>
+
+                    <h2 id="schoolName">
+                        Loading school...
+                    </h2>
+
+                    <p id="schoolAddress">
+                        Loading address...
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <span class="status-badge active">
+                        Active
+                    </span>
+
+                </div>
+
             </div>
 
 
-            <div class="action-bar">
+            <!-- PAGE HEADER -->
+            <div class="card">
 
-                <div class="search-box">
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Student Management
+                        </h2>
+
+                        <p>
+                            Register, search and manage
+                            students in this school.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="openStudentModal()">
+
+                        + Add Student
+
+                    </button>
+
+                </div>
+
+
+                <!-- SEARCH -->
+                <div class="search-bar">
+
                     <input
                         type="text"
                         id="searchInput"
-                        placeholder="Search student by name..."
-                        onkeyup="searchStudents()"
-                    >
+                        placeholder="Search by student ID or name..."
+                        oninput="filterStudents()">
+
                 </div>
 
-                <button class="add-btn" onclick="openModal()">
-                    + Add Student
-                </button>
+
+                <!-- CLASS FILTER -->
+                <div class="form-group">
+
+                    <label for="classFilter">
+                        Filter by Class
+                    </label>
+
+                    <select
+                        id="classFilter"
+                        onchange="filterStudents()">
+
+                        <option value="">
+                            All Classes
+                        </option>
+
+                        <option value="Creche">
+                            Creche
+                        </option>
+
+                        <option value="Nursery 1">
+                            Nursery 1
+                        </option>
+
+                        <option value="Nursery 2">
+                            Nursery 2
+                        </option>
+
+                        <option value="Nursery 3">
+                            Nursery 3
+                        </option>
+
+                        <option value="Primary 1">
+                            Primary 1
+                        </option>
+
+                        <option value="Primary 2">
+                            Primary 2
+                        </option>
+
+                        <option value="Primary 3">
+                            Primary 3
+                        </option>
+
+                        <option value="Primary 4">
+                            Primary 4
+                        </option>
+
+                        <option value="Primary 5">
+                            Primary 5
+                        </option>
+
+                        <option value="Primary 6">
+                            Primary 6
+                        </option>
+
+                        <option value="JSS 1">
+                            JSS 1
+                        </option>
+
+                        <option value="JSS 2">
+                            JSS 2
+                        </option>
+
+                        <option value="JSS 3">
+                            JSS 3
+                        </option>
+
+                        <option value="SS 1">
+                            SS 1
+                        </option>
+
+                        <option value="SS 2">
+                            SS 2
+                        </option>
+
+                        <option value="SS 3">
+                            SS 3
+                        </option>
+
+                    </select>
+
+                </div>
 
             </div>
 
 
-            <div class="table-card">
+            <!-- STUDENTS TABLE -->
+            <div class="card">
 
-                <table>
+                <div class="card-header">
 
-                    <thead>
-                        <tr>
-                            <th>Student ID</th>
-                            <th>Name</th>
-                            <th>Gender</th>
-                            <th>Class</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
+                    <div>
 
-                    <tbody id="studentTable">
+                        <h2>
+                            Registered Students
+                        </h2>
 
-                        <tr>
-                            <td>ST001</td>
-                            <td class="student-name">John Peter</td>
-                            <td>Male</td>
-                            <td>JSS 1</td>
-                            <td>
-                                <span class="badge">Active</span>
-                            </td>
-                            <td class="actions">
-                                <button class="edit">✏️</button>
-                                <button class="delete">🗑️</button>
-                            </td>
-                        </tr>
+                        <p>
+                            <span id="studentCount">
+                                0
+                            </span>
+                            student(s)
+                        </p>
 
-                        <tr>
-                            <td>ST002</td>
-                            <td class="student-name">Mary James</td>
-                            <td>Female</td>
-                            <td>JSS 2</td>
-                            <td>
-                                <span class="badge">Active</span>
-                            </td>
-                            <td class="actions">
-                                <button class="edit">✏️</button>
-                                <button class="delete">🗑️</button>
-                            </td>
-                        </tr>
+                    </div>
 
-                        <tr>
-                            <td>ST003</td>
-                            <td class="student-name">David Paul</td>
-                            <td>Male</td>
-                            <td>SS 1</td>
-                            <td>
-                                <span class="badge">Active</span>
-                            </td>
-                            <td class="actions">
-                                <button class="edit">✏️</button>
-                                <button class="delete">🗑️</button>
-                            </td>
-                        </tr>
+                </div>
 
-                    </tbody>
 
-                </table>
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Student ID
+                                </th>
+
+                                <th>
+                                    Name
+                                </th>
+
+                                <th>
+                                    Gender
+                                </th>
+
+                                <th>
+                                    Class
+                                </th>
+
+                                <th>
+                                    Parent / Guardian
+                                </th>
+
+                                <th>
+                                    Phone
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="studentsTableBody">
+
+                            <tr>
+
+                                <td colspan="8"
+                                    class="loading">
+
+                                    Loading students...
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
 
             </div>
+
 
         </section>
+
+
+        <!-- FOOTER -->
+        <footer class="footer">
+
+            <p>
+                School Management System © 2026
+            </p>
+
+        </footer>
 
     </main>
 
@@ -511,412 +372,557 @@
 
 
 <!-- ADD STUDENT MODAL -->
+<div
+    id="studentModal"
+    class="modal">
 
-<div class="modal" id="studentModal">
+    <div class="modal-content">
 
-    <div class="modal-box">
+        <div class="modal-header">
 
-        <h2>Add New Student</h2>
+            <div>
 
-        <div class="form-group">
-            <label>Student ID</label>
-            <input type="text" id="studentId" placeholder="e.g. ST004">
-        </div>
+                <h2>
+                    Register New Student
+                </h2>
 
-        <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" id="studentName" placeholder="Enter full name">
-        </div>
+                <p>
+                    Add a student to this school.
+                </p>
 
-        <div class="form-group">
-            <label>Gender</label>
+            </div>
 
-            <select id="studentGender">
-                <option value="">Select gender</option>
-                <option>Male</option>
-                <option>Female</option>
-            </select>
+            <button
+                class="modal-close"
+                onclick="closeStudentModal()">
 
-        </div>
+                ×
 
-        <div class="form-group">
-            <label>Class</label>
-
-            <select id="studentClass">
-                <option value="">Select class</option>
-                <option>JSS 1</option>
-                <option>JSS 2</option>
-                <option>JSS 3</option>
-                <option>SS 1</option>
-                <option>SS 2</option>
-                <option>SS 3</option>
-            </select>
-
-        </div>
-
-        <div class="form-buttons">
-
-            <button class="cancel-btn" onclick="closeModal()">
-                Cancel
-            </button>
-
-            <button class="save-btn" onclick="addStudent()">
-                Save Student
             </button>
 
         </div>
+
+
+        <form id="studentForm">
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Student ID *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="studentId"
+                        required
+                        placeholder="e.g. STU001">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Gender *
+                    </label>
+
+                    <select
+                        id="gender"
+                        required>
+
+                        <option value="">
+                            Select gender
+                        </option>
+
+                        <option value="Male">
+                            Male
+                        </option>
+
+                        <option value="Female">
+                            Female
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        First Name *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="firstName"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Last Name *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="lastName"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Other Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="otherName">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Date of Birth
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dateOfBirth">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Class *
+                    </label>
+
+                    <select
+                        id="className"
+                        required>
+
+                        <option value="">
+                            Select class
+                        </option>
+
+                        <option value="Creche">
+                            Creche
+                        </option>
+
+                        <option value="Nursery 1">
+                            Nursery 1
+                        </option>
+
+                        <option value="Nursery 2">
+                            Nursery 2
+                        </option>
+
+                        <option value="Nursery 3">
+                            Nursery 3
+                        </option>
+
+                        <option value="Primary 1">
+                            Primary 1
+                        </option>
+
+                        <option value="Primary 2">
+                            Primary 2
+                        </option>
+
+                        <option value="Primary 3">
+                            Primary 3
+                        </option>
+
+                        <option value="Primary 4">
+                            Primary 4
+                        </option>
+
+                        <option value="Primary 5">
+                            Primary 5
+                        </option>
+
+                        <option value="Primary 6">
+                            Primary 6
+                        </option>
+
+                        <option value="JSS 1">
+                            JSS 1
+                        </option>
+
+                        <option value="JSS 2">
+                            JSS 2
+                        </option>
+
+                        <option value="JSS 3">
+                            JSS 3
+                        </option>
+
+                        <option value="SS 1">
+                            SS 1
+                        </option>
+
+                        <option value="SS 2">
+                            SS 2
+                        </option>
+
+                        <option value="SS 3">
+                            SS 3
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Parent / Guardian
+                    </label>
+
+                    <input
+                        type="text"
+                        id="parentName">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Parent Phone
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="parentPhone">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="parentEmail">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Address
+                    </label>
+
+                    <textarea
+                        id="address"
+                        rows="3"></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick="closeStudentModal()">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary">
+
+                    Register Student
+
+                </button>
+
+            </div>
+
+        </form>
 
     </div>
 
 </div>
-
-
 <script>
+const params = new URLSearchParams(window.location.search);
+const schoolId = params.get("schoolId");
+let allStudents = [];
 
-    /* GET SELECTED SCHOOL */
+function toggleSidebar() {
+    document.querySelector(".sidebar").classList.toggle("open");
+}
 
-    const params = new URLSearchParams(window.location.search);
+function openStudentModal() {
+    document.getElementById("studentModal").classList.add("show");
+}
 
-    const schoolName =
-        params.get("school") || "School One";
+function closeStudentModal() {
+    document.getElementById("studentModal").classList.remove("show");
+}
 
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
-    /* DISPLAY SCHOOL NAME */
+async function loadSchoolInfo() {
+    const response = await fetch(
+        `/api/schools/${encodeURIComponent(schoolId)}`
+    );
+    const data = await response.json();
 
-    document.getElementById("schoolTitle").textContent =
-        schoolName;
+    if (!response.ok || !data.success) {
+        throw new Error(data.message || "Unable to load school.");
+    }
 
+    const school = data.school;
+
+    document.getElementById("sidebarSchoolName").textContent = school.name;
+    document.getElementById("schoolName").textContent = school.name;
     document.getElementById("schoolSubtitle").textContent =
-        "🏫 " + schoolName + " — Student Management";
+        `Student management — ${school.name}`;
+    document.getElementById("schoolAddress").textContent =
+        school.address || "School address not provided";
 
+    document.getElementById("dashboardLink").href =
+        `school.html?schoolId=${encodeURIComponent(schoolId)}`;
 
-    /* SCHOOL-SPECIFIC STORAGE */
+    document.getElementById("staffLink").href =
+        `staff.html?schoolId=${encodeURIComponent(schoolId)}`;
 
-    const storageKey =
-        "students_" + schoolName;
+    document.title = `${school.name} — Students`;
+}
 
+async function loadStudents() {
+    const tbody = document.getElementById("studentsTableBody");
+    tbody.innerHTML =
+        `<tr><td colspan="8">Loading students...</td></tr>`;
 
-    /* GET STUDENTS */
-
-    let students =
-        JSON.parse(localStorage.getItem(storageKey)) || [
-
-            {
-                id: "ST001",
-                name: "John Peter",
-                gender: "Male",
-                className: "JSS 1"
-            },
-
-            {
-                id: "ST002",
-                name: "Mary James",
-                gender: "Female",
-                className: "JSS 2"
-            },
-
-            {
-                id: "ST003",
-                name: "David Paul",
-                gender: "Male",
-                className: "SS 1"
-            }
-
-        ];
-
-
-    /* SAVE STUDENTS */
-
-    function saveStudents() {
-
-        localStorage.setItem(
-            storageKey,
-            JSON.stringify(students)
+    try {
+        const response = await fetch(
+            `/api/schools/${encodeURIComponent(schoolId)}/students`
         );
+        const data = await response.json();
 
-    }
-
-
-    /* DISPLAY STUDENTS */
-
-    function displayStudents(list = students) {
-
-        const table =
-            document.getElementById("studentTable");
-
-        table.innerHTML = "";
-
-
-        if (list.length === 0) {
-
-            table.innerHTML = `
-                <tr>
-                    <td colspan="6">
-                        <div class="empty">
-                            No students found.
-                        </div>
-                    </td>
-                </tr>
-            `;
-
-            return;
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to load students.");
         }
 
+        allStudents = data.students || [];
+        filterStudents();
 
-        list.forEach((student, index) => {
+    } catch (error) {
+        console.error(error);
+        tbody.innerHTML = `
+            <tr><td colspan="8">
+                Unable to load students. Check your server and database.
+            </td></tr>`;
+    }
+}
 
-            const row =
-                document.createElement("tr");
+function filterStudents() {
+    const search = document.getElementById("searchInput")
+        .value.trim().toLowerCase();
 
+    const selectedClass =
+        document.getElementById("classFilter").value;
 
-            row.innerHTML = `
+    const filtered = allStudents.filter(student => {
+        const fullName = [
+            student.first_name,
+            student.other_name,
+            student.last_name
+        ].filter(Boolean).join(" ").toLowerCase();
 
+        const matchesSearch =
+            fullName.includes(search) ||
+            String(student.student_id || "")
+                .toLowerCase().includes(search);
+
+        const matchesClass =
+            !selectedClass || student.class_name === selectedClass;
+
+        return matchesSearch && matchesClass;
+    });
+
+    document.getElementById("studentCount").textContent =
+        filtered.length;
+
+    const tbody = document.getElementById("studentsTableBody");
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = `
+            <tr><td colspan="8">
+                No students found. Add a student or change your search.
+            </td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = filtered.map(student => {
+        const fullName = [
+            student.first_name,
+            student.other_name,
+            student.last_name
+        ].filter(Boolean).join(" ");
+
+        return `
+            <tr>
+                <td>${escapeHtml(student.student_id)}</td>
+                <td>${escapeHtml(fullName)}</td>
+                <td>${escapeHtml(student.gender || "-")}</td>
+                <td>${escapeHtml(student.class_name || "-")}</td>
+                <td>${escapeHtml(student.parent_name || "-")}</td>
+                <td>${escapeHtml(student.parent_phone || "-")}</td>
+                <td>${escapeHtml(student.status || "Active")}</td>
                 <td>
-                    ${student.id}
-                </td>
-
-                <td class="student-name">
-                    ${student.name}
-                </td>
-
-                <td>
-                    ${student.gender}
-                </td>
-
-                <td>
-                    ${student.className}
-                </td>
-
-                <td>
-                    <span class="badge">
-                        Active
-                    </span>
-                </td>
-
-                <td class="actions">
-
-                    <button
-                        class="delete"
-                        onclick="deleteStudent(${index})">
-                        🗑️
+                    <button class="btn btn-danger"
+                        onclick="deleteStudent('${encodeURIComponent(student.student_id)}')">
+                        Delete
                     </button>
-
                 </td>
+            </tr>`;
+    }).join("");
+}
+document.getElementById("studentForm").addEventListener(
+    "submit",
+    async function(event) {
+        event.preventDefault();
 
-            `;
-
-
-            table.appendChild(row);
-
-        });
-
-    }
-
-
-    /* OPEN MODAL */
-
-    function openModal() {
-
-        document.getElementById(
-            "studentModal"
-        ).style.display = "flex";
-
-    }
-
-
-    /* CLOSE MODAL */
-
-    function closeModal() {
-
-        document.getElementById(
-            "studentModal"
-        ).style.display = "none";
-
-    }
-
-
-    /* ADD STUDENT */
-
-    function addStudent() {
-
-        const id =
-            document.getElementById(
-                "studentId"
-            ).value.trim();
-
-
-        const name =
-            document.getElementById(
-                "studentName"
-            ).value.trim();
-
-
-        const gender =
-            document.getElementById(
-                "studentGender"
-            ).value;
-
-
-        const studentClass =
-            document.getElementById(
-                "studentClass"
-            ).value;
-
-
-        if (!id || !name || !gender || !studentClass) {
-
-            alert(
-                "Please complete all student information."
-            );
-
+        if (!schoolId) {
+            alert("No school selected. Return to the Admin dashboard.");
             return;
-
         }
 
-
-        /* CHECK DUPLICATE ID */
-
-        const exists =
-            students.some(
-                student => student.id === id
-            );
-
-
-        if (exists) {
-
-            alert(
-                "This Student ID already exists."
-            );
-
-            return;
-
-        }
-
-
-        /* CREATE STUDENT */
-
-        const newStudent = {
-
-            id: id,
-
-            name: name,
-
-            gender: gender,
-
-            className: studentClass
-
+        const student = {
+            student_id: document.getElementById("studentId").value.trim(),
+            first_name: document.getElementById("firstName").value.trim(),
+            last_name: document.getElementById("lastName").value.trim(),
+            other_name: document.getElementById("otherName").value.trim(),
+            gender: document.getElementById("gender").value,
+            date_of_birth:
+                document.getElementById("dateOfBirth").value || null,
+            class_name: document.getElementById("className").value,
+            parent_name: document.getElementById("parentName").value.trim(),
+            parent_phone: document.getElementById("parentPhone").value.trim(),
+            parent_email: document.getElementById("parentEmail").value.trim(),
+            address: document.getElementById("address").value.trim()
         };
 
+        try {
+            const response = await fetch(
+                `/api/schools/${encodeURIComponent(schoolId)}/students`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(student)
+                }
+            );
 
-        students.push(newStudent);
+            const data = await response.json();
 
+            if (!response.ok || !data.success) {
+                alert(data.message || "Student registration failed.");
+                return;
+            }
 
-        /* SAVE */
+            closeStudentModal();
+            document.getElementById("studentForm").reset();
 
-        saveStudents();
+            await loadStudents();
+            alert("Student registered successfully.");
 
+        } catch (error) {
+            console.error(error);
+            alert("Could not connect to the server.");
+        }
+    }
+);
 
-        /* REFRESH TABLE */
+async function deleteStudent(studentId) {
+    const decodedId = decodeURIComponent(studentId);
 
-        displayStudents();
+    if (!confirm(`Delete student ${decodedId}? This cannot be undone.`)) {
+        return;
+    }
 
-
-        /* CLEAR FORM */
-
-        document.getElementById(
-            "studentId"
-        ).value = "";
-
-        document.getElementById(
-            "studentName"
-        ).value = "";
-
-        document.getElementById(
-            "studentGender"
-        ).value = "";
-
-        document.getElementById(
-            "studentClass"
-        ).value = "";
-
-
-        closeModal();
-
-
-        alert(
-            name +
-            " has been added to " +
-            schoolName
+    try {
+        const response = await fetch(
+            `/api/schools/${encodeURIComponent(schoolId)}/students/${encodeURIComponent(decodedId)}`,
+            { method: "DELETE" }
         );
 
-    }
+        const data = await response.json();
 
-
-    /* DELETE STUDENT */
-
-    function deleteStudent(index) {
-
-        const student =
-            students[index];
-
-
-        const confirmDelete =
-            confirm(
-                "Delete " +
-                student.name +
-                " from " +
-                schoolName +
-                "?"
-            );
-
-
-        if (!confirmDelete) {
-
+        if (!response.ok || !data.success) {
+            alert(data.message || "Unable to delete student.");
             return;
-
         }
 
+        await loadStudents();
+        alert("Student deleted successfully.");
 
-        students.splice(index, 1);
+    } catch (error) {
+        console.error(error);
+        alert("Could not connect to the server.");
+    }
+}
 
-
-        saveStudents();
-
-
-        displayStudents();
-
+async function initializePage() {
+    if (!schoolId) {
+        alert("No school selected. Open a school from the Admin dashboard.");
+        window.location.href = "admin.html";
+        return;
     }
 
+    try {
+        await loadSchoolInfo();
+        await loadStudents();
 
-    /* SEARCH */
+        const requestedClass = params.get("className");
 
-    function searchStudents() {
+        if (requestedClass) {
+            document.getElementById("classFilter").value = requestedClass;
+            filterStudents();
+        }
 
-        const search =
-            document.getElementById(
-                "searchInput"
-            ).value.toLowerCase();
-
-
-        const filtered =
-            students.filter(student =>
-
-                student.name
-                    .toLowerCase()
-                    .includes(search)
-
-            );
-
-
-        displayStudents(filtered);
-
+    } catch (error) {
+        console.error(error);
+        alert("Unable to load school details. Check your server and database.");
     }
+}
 
-
-    /* INITIAL DISPLAY */
-
-    displayStudents();
-
+initializePage();
 </script>
 
 </body>
