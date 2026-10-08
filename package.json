@@ -1,15 +1,14 @@
 {
-  "name": "rhoses-tech-management",
+  "name": "school-management-system",
   "version": "1.0.0",
-  "description": "Rhoses Tech Management - Multi-School Management System",
+  "description": "Multi-school management platform for schools from Creche to SS3",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
     "express": "^4.21.2",
-    "express-session": "^1.18.1",
     "pg": "^8.13.1"
   }
 }
