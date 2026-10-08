@@ -561,5 +561,64 @@
     loadParents();
 </script>
 
+<script>
+(async function fixParentSchoolDisplay() {
+    const schoolKeys = [
+        "schoolId",
+        "selectedSchoolId",
+        "currentSchoolId",
+        "school_id"
+    ];
+
+    let schoolId = null;
+
+    // Find the selected school ID
+    for (const key of schoolKeys) {
+        const value = localStorage.getItem(key);
+
+        if (value && value !== "null" && value !== "undefined") {
+            schoolId = value;
+            break;
+        }
+    }
+
+    const headings = [...document.querySelectorAll("h1, h2, h3, p, div")];
+
+    const schoolHeading = headings.find(el =>
+        el.children.length === 0 &&
+        el.textContent.trim() === "No school selected"
+    );
+
+    const addressElement = headings.find(el =>
+        el.children.length === 0 &&
+        el.textContent.trim() === "Loading address..."
+    );
+
+    if (!schoolId) {
+        if (schoolHeading) {
+            schoolHeading.textContent = "Please select a school";
+        }
+
+        if (addressElement) {
+            addressElement.textContent =
+                "School information is unavailable. Return to the school selection page.";
+        }
+
+        console.warn(
+            "Parent portal: no school ID found in localStorage."
+        );
+
+        return;
+    }
+
+    console.log("Parent portal school ID:", schoolId);
+
+    // The school ID exists, but the correct API endpoint
+    // must match the routes implemented in server.js.
+})();
+</script>
+</body>
+
+
 </body>
 </html>
