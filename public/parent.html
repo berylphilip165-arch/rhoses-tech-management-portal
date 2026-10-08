@@ -561,64 +561,96 @@
     loadParents();
 </script>
 
-<script>
-(async function fixParentSchoolDisplay() {
-    const schoolKeys = [
+(async function loadParentSchool() {
+    const keys = [
         "schoolId",
         "selectedSchoolId",
         "currentSchoolId",
-        "school_id"
+        "school_id",
+        "selectedSchool"
     ];
 
     let schoolId = null;
 
-    // Find the selected school ID
-    for (const key of schoolKeys) {
+    for (const key of keys) {
         const value = localStorage.getItem(key);
-
-        if (value && value !== "null" && value !== "undefined") {
-            schoolId = value;
-            break;
+        if (!value || value === "null" || value === "undefined") {
+            continue;
         }
+
+        try {
+            const parsed = JSON.parse(value);
+            schoolId = typeof parsed === "object"
+                ? parsed?.id || parsed?.schoolId
+                : parsed;
+        } catch {
+            schoolId = value;
+        }
+
+        if (schoolId) break;
     }
 
-    const headings = [...document.querySelectorAll("h1, h2, h3, p, div")];
+    const textElements = [...document.querySelectorAll("h1,h2,h3,p,div")];
 
-    const schoolHeading = headings.find(el =>
+    const schoolHeading = textElements.find(el =>
         el.children.length === 0 &&
-        el.textContent.trim() === "No school selected"
+        /^(No school selected|Please select a school)$/.test(
+            el.textContent.trim()
+        )
     );
 
-    const addressElement = headings.find(el =>
+    const addressElement = textElements.find(el =>
         el.children.length === 0 &&
-        el.textContent.trim() === "Loading address..."
+        /^(Loading address|School information is unavailable)/.test(
+            el.textContent.trim()
+        )
     );
 
     if (!schoolId) {
         if (schoolHeading) {
-            schoolHeading.textContent = "Please select a school";
+            schoolHeading.textContent = "No school selected";
+        }
+        if (addressElement) {
+            addressElement.textContent =
+                "Please select a school from the school portal first.";
+        }
+        console.error("No school ID found. Check the school selection code.");
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `/api/schools/${encodeURIComponent(schoolId)}`
+        );
+
+        if (!response.ok) {
+            throw new Error("School API returned HTTP " + response.status);
+        }
+
+        const result = await response.json();
+        const school = result.school || result;
+
+        if (schoolHeading) {
+            schoolHeading.textContent =
+                school.name || school.school_name || "Selected School";
         }
 
         if (addressElement) {
             addressElement.textContent =
-                "School information is unavailable. Return to the school selection page.";
+                school.address || school.location || "Address unavailable";
         }
 
-        console.warn(
-            "Parent portal: no school ID found in localStorage."
-        );
+        console.log("School loaded:", school);
+    } catch (error) {
+        console.error("Unable to load school:", error);
 
-        return;
+        if (addressElement) {
+            addressElement.textContent =
+                "Unable to load school details. Check the API connection.";
+        }
     }
-
-    console.log("Parent portal school ID:", schoolId);
-
-    // The school ID exists, but the correct API endpoint
-    // must match the routes implemented in server.js.
 })();
 </script>
-</body>
-
 
 </body>
 </html>
