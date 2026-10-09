@@ -18,41 +18,15 @@
         </div>
 
         <nav class="sidebar-nav">
-            <a id="dashboardLink" href="#" class="nav-item">
-                📊 Dashboard
-            </a>
-
-            <a id="studentsLink" href="#" class="nav-item">
-                👨‍🎓 Students
-            </a>
-
-            <a id="staffLink" href="#" class="nav-item">
-                👨‍🏫 Teachers & Staff
-            </a>
-
-            <a id="classesLink" href="#" class="nav-item">
-                📚 Classes & Subjects
-            </a>
-
-            <a id="resultsLink" href="#" class="nav-item">
-                📝 Results
-            </a>
-
-            <a id="attendanceLink" href="#" class="nav-item">
-                📅 Attendance
-            </a>
-
-            <a id="feesLink" href="#" class="nav-item">
-                💰 Fees & Payments
-            </a>
-
-            <a href="#parents" class="nav-item active">
-                👪 Parents
-            </a>
-
-            <a href="admin.html" class="nav-item">
-                ⬅️ Super Admin
-            </a>
+            <a id="dashboardLink" href="#" class="nav-item">📊 Dashboard</a>
+            <a id="studentsLink" href="#" class="nav-item">👨‍🎓 Students</a>
+            <a id="staffLink" href="#" class="nav-item">👨‍🏫 Teachers & Staff</a>
+            <a id="classesLink" href="#" class="nav-item">📚 Classes & Subjects</a>
+            <a id="resultsLink" href="#" class="nav-item">📝 Results</a>
+            <a id="attendanceLink" href="#" class="nav-item">📅 Attendance</a>
+            <a id="feesLink" href="#" class="nav-item">💰 Fees & Payments</a>
+            <a href="#parents" class="nav-item active">👪 Parents</a>
+            <a id="adminLink" href="admin.html" class="nav-item">⬅️ Super Admin</a>
         </nav>
     </aside>
 
@@ -60,12 +34,8 @@
     <main class="main-content">
 
         <header class="topbar">
-            <button
-                class="menu-btn"
-                type="button"
-                onclick="toggleSidebar()">
-                ☰
-            </button>
+            <button class="menu-btn" type="button"
+                onclick="toggleSidebar()">☰</button>
 
             <div>
                 <h1>Parents & Guardians</h1>
@@ -73,7 +43,7 @@
             </div>
         </header>
 
-        <section class="page-content">
+        <section class="page-content" id="parents">
 
             <!-- SCHOOL INFORMATION -->
             <div class="school-header card">
@@ -81,13 +51,11 @@
                     <h2 id="schoolName">Loading school...</h2>
                     <p id="schoolAddress">Loading address...</p>
                 </div>
-
                 <span class="status-badge active">Active</span>
             </div>
 
             <!-- STATISTICS -->
             <div class="stats-grid">
-
                 <div class="stat-card">
                     <div class="stat-icon">👪</div>
                     <div>
@@ -111,20 +79,17 @@
                         <p>With Email</p>
                     </div>
                 </div>
-
             </div>
 
-            <!-- SEARCH AND ACTIONS -->
+            <!-- PARENT MANAGEMENT -->
             <div class="card">
-
                 <div class="card-header">
                     <div>
                         <h2>Parent Management</h2>
                         <p>Register and manage parents or guardians.</p>
                     </div>
 
-                    <button
-                        type="button"
+                    <button type="button"
                         class="btn btn-primary"
                         onclick="openParentModal()">
                         + Add Parent
@@ -132,18 +97,14 @@
                 </div>
 
                 <div class="search-bar">
-                    <input
-                        type="search"
-                        id="searchInput"
+                    <input type="search" id="searchInput"
                         placeholder="Search parent name, phone, or email..."
                         oninput="filterParents()">
                 </div>
-
             </div>
 
-            <!-- PARENT RECORDS TABLE -->
+            <!-- PARENT RECORDS -->
             <div class="card">
-
                 <div class="card-header">
                     <div>
                         <h2>Registered Parents & Guardians</h2>
@@ -176,7 +137,6 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
 
         </section>
@@ -190,7 +150,6 @@
 
 <!-- ADD PARENT MODAL -->
 <div id="parentModal" class="modal">
-
     <div class="modal-content">
 
         <div class="modal-header">
@@ -199,100 +158,126 @@
                 <p>Enter the parent's information below.</p>
             </div>
 
-            <button
-                type="button"
-                class="modal-close"
-                onclick="closeParentModal()">
-                ×
-            </button>
+            <button type="button" class="modal-close"
+                onclick="closeParentModal()">×</button>
         </div>
 
         <form id="parentForm">
-
             <div class="form-grid">
 
                 <div class="form-group">
                     <label for="parentId">Parent ID *</label>
-                    <input
-                        type="text"
-                        id="parentId"
-                        required
+                    <input type="text" id="parentId" required
                         placeholder="e.g. PAR001">
                 </div>
 
                 <div class="form-group">
                     <label for="parentName">Full Name *</label>
-                    <input
-                        type="text"
-                        id="parentName"
-                        required
+                    <input type="text" id="parentName" required
                         placeholder="Enter full name">
                 </div>
 
                 <div class="form-group">
                     <label for="parentPhone">Phone Number *</label>
-                    <input
-                        type="tel"
-                        id="parentPhone"
-                        required
+                    <input type="tel" id="parentPhone" required
                         placeholder="Enter phone number">
                 </div>
 
                 <div class="form-group">
                     <label for="parentEmail">Email Address</label>
-                    <input
-                        type="email"
-                        id="parentEmail"
+                    <input type="email" id="parentEmail"
                         placeholder="Enter email address">
                 </div>
 
                 <div class="form-group">
                     <label for="parentAddress">Home Address</label>
-                    <input
-                        type="text"
-                        id="parentAddress"
+                    <input type="text" id="parentAddress"
                         placeholder="Enter home address">
                 </div>
 
                 <div class="form-group">
                     <label for="parentOccupation">Occupation</label>
-                    <input
-                        type="text"
-                        id="parentOccupation"
+                    <input type="text" id="parentOccupation"
                         placeholder="Enter occupation">
                 </div>
 
             </div>
 
             <div class="modal-actions">
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    onclick="closeParentModal()">
-                    Cancel
-                </button>
+                <button type="button" class="btn btn-secondary"
+                    onclick="closeParentModal()">Cancel</button>
 
-                <button
-                    type="submit"
-                    class="btn btn-primary">
+                <button type="submit" class="btn btn-primary">
                     Register Parent
                 </button>
             </div>
-
         </form>
 
     </div>
 </div>
+
 <script>
-    // Get the selected school's ID
+"use strict";
+
+/* SCHOOL ID AND PARENT DATA */
+let schoolId = null;
+let parentRecords = [];
+
+/* FIND SELECTED SCHOOL */
+function getSelectedSchoolId() {
     const params = new URLSearchParams(window.location.search);
-    const schoolId = params.get("schoolId");
+    const urlSchoolId = params.get("schoolId");
 
-    let parentRecords = [];
+    if (urlSchoolId &&
+        urlSchoolId !== "null" &&
+        urlSchoolId !== "undefined") {
+        return urlSchoolId;
+    }
 
-    // Safely display text
-    function escapeHTML(value) {
-        return String(value ?? "").replace(/[&<>"']/g, function (char) {
+    const keys = [
+        "selectedSchoolId",
+        "schoolId",
+        "currentSchoolId",
+        "school_id",
+        "selectedSchool"
+    ];
+
+    for (const key of keys) {
+        const value = localStorage.getItem(key);
+
+        if (!value || value === "null" ||
+            value === "undefined") {
+            continue;
+        }
+
+        try {
+            const parsed = JSON.parse(value);
+            let id;
+
+            if (parsed && typeof parsed === "object") {
+                id = parsed.id || parsed.schoolId ||
+                    parsed.school_id;
+            } else {
+                id = parsed;
+            }
+
+            if (id && id !== "null" &&
+                id !== "undefined") {
+                return String(id);
+            }
+        } catch (error) {
+            return value;
+        }
+    }
+
+    return null;
+}
+
+/* SAFE HTML DISPLAY */
+function escapeHTML(value) {
+    return String(value ?? "").replace(
+        /[&<>"']/g,
+        function (char) {
             const entities = {
                 "&": "&amp;",
                 "<": "&lt;",
@@ -302,48 +287,48 @@
             };
 
             return entities[char];
-        });
-    }
-
-    // Load school information
-    
-
-async function loadSchoolInfo() {
-    const keys = [
-        "selectedSchoolId",
-        "schoolId",
-        "currentSchoolId",
-        "school_id"
-    ];
-
-    let schoolId = null;
-
-    for (const key of keys) {
-        const value = localStorage.getItem(key);
-
-        if (value && value !== "null" && value !== "undefined") {
-            try {
-                const parsed = JSON.parse(value);
-
-                schoolId =
-                    typeof parsed === "object" && parsed !== null
-                        ? (parsed.id || parsed.schoolId || parsed.school_id)
-                        : parsed;
-            } catch (error) {
-                schoolId = value;
-            }
-
-            if (schoolId) break;
         }
-    }
+    );
+}
 
+/* NAVIGATION LINKS */
+function setupLinks() {
+    if (!schoolId) return;
+
+    const id = encodeURIComponent(schoolId);
+
+    const links = {
+        dashboardLink: "school.html?schoolId=" + id,
+        studentsLink: "school.html?schoolId=" + id + "#students",
+        staffLink: "staff.html?schoolId=" + id,
+        classesLink: "school.html?schoolId=" + id + "#classes",
+        resultsLink: "school.html?schoolId=" + id + "#results",
+        attendanceLink: "school.html?schoolId=" + id + "#attendance",
+        feesLink: "school.html?schoolId=" + id + "#fees",
+        adminLink: "admin.html"
+    };
+
+    for (const [elementId, url] of Object.entries(links)) {
+        const element = document.getElementById(elementId);
+
+        if (element) element.href = url;
+    }
+}
+
+/* LOAD SCHOOL INFORMATION */
+async function loadSchoolInfo() {
     const heading = document.getElementById("schoolName");
     const address = document.getElementById("schoolAddress");
+    const sidebarName = document.getElementById("sidebarSchoolName");
+    const subtitle = document.getElementById("schoolSubtitle");
 
     if (!schoolId) {
-        if (heading) heading.textContent = "No school selected";
-        if (address) address.textContent = "Please select a school first.";
-        return;
+        heading.textContent = "No school selected";
+        address.textContent =
+            "Please select a school from the school portal first.";
+        sidebarName.textContent = "No school selected";
+        subtitle.textContent = "School selection required";
+        return false;
     }
 
     try {
@@ -352,349 +337,285 @@ async function loadSchoolInfo() {
         );
 
         if (!response.ok) {
-            throw new Error("School request failed: " + response.status);
-        }
-
-        const data = await response.json();
-        const school = data.school || data;
-
-        const name = school.name || school.school_name || "School Portal";
-
-        if (heading) heading.textContent = name;
-
-        const sidebarName = document.getElementById("sidebarSchoolName");
-        if (sidebarName) sidebarName.textContent = name;
-
-        if (address) {
-            address.textContent =
-                school.address || school.location || "Address unavailable";
-        }
-
-        const subtitle = document.getElementById("schoolSubtitle");
-        if (subtitle) subtitle.textContent = "Manage parents at " + name;
-
-        const id = encodeURIComponent(schoolId);
-
-        const staffLink = document.getElementById("staffLink");
-        if (staffLink) {
-            staffLink.href = "staff.html?schoolId=" + id;
-        }
-
-        const classesLink = document.getElementById("classesLink");
-        if (classesLink) {
-            classesLink.href = "school.html?schoolId=" + id + "#classes";
-        }
-
-        const resultsLink = document.getElementById("resultsLink");
-        if (resultsLink) {
-            resultsLink.href = "school.html?schoolId=" + id + "#results";
-        }
-
-        const attendanceLink = document.getElementById("attendanceLink");
-        if (attendanceLink) {
-            attendanceLink.href = "school.html?schoolId=" + id + "#attendance";
-        }
-
-        const feesLink = document.getElementById("feesLink");
-        if (feesLink) {
-            feesLink.href = "school.html?schoolId=" + id + "#fees";
-        }
-
-    } catch (error) {
-        console.error("Could not load school:", error);
-
-        if (address) {
-            address.textContent =
-                "Unable to load school details. Check the server API route.";
-        }
-    }
-}
-
-
-    // Load parents belonging to this school
-    async function loadParents() {
-        const tableBody = document.getElementById("parentTableBody");
-
-        if (!schoolId) {
-            tableBody.innerHTML =
-                '<tr><td colspan="6">Please select a school first.</td></tr>';
-            return;
-        }
-
-        tableBody.innerHTML =
-            '<tr><td colspan="6">Loading parent records...</td></tr>';
-
-        try {
-            const response = await fetch(
-                "/api/schools/" + encodeURIComponent(schoolId) + "/parents"
+            throw new Error(
+                "School request failed: HTTP " + response.status
             );
-
-            if (!response.ok) {
-                throw new Error("Could not load parent records.");
-            }
-
-            const data = await response.json();
-
-            parentRecords = Array.isArray(data)
-                ? data
-                : (data.parents || data.data || []);
-
-            updateParentStats();
-            filterParents();
-
-        } catch (error) {
-            console.error(error);
-
-            tableBody.innerHTML =
-                '<tr><td colspan="6">Could not load parents. Check your server.</td></tr>';
-        }
-    }
-
-    // Update the parent statistics
-    function updateParentStats() {
-        const withPhone = parentRecords.filter(function (parent) {
-            return Boolean(parent.phone);
-        });
-
-        const withEmail = parentRecords.filter(function (parent) {
-            return Boolean(parent.email);
-        });
-
-        document.getElementById("totalParents").textContent =
-            parentRecords.length;
-
-        document.getElementById("parentsWithPhone").textContent =
-            withPhone.length;
-
-        document.getElementById("parentsWithEmail").textContent =
-            withEmail.length;
-    }
-
-    // Search parent records
-    function filterParents() {
-        const searchTerm = document.getElementById("searchInput")
-            .value.trim().toLowerCase();
-
-        const filteredParents = parentRecords.filter(function (parent) {
-            const text = [
-                parent.parent_id,
-                parent.full_name,
-                parent.phone,
-                parent.email,
-                parent.address,
-                parent.occupation
-            ].join(" ").toLowerCase();
-
-            return text.includes(searchTerm);
-        });
-
-        renderParents(filteredParents);
-    }
-
-    // Display parent records
-    function renderParents(records) {
-        const tableBody = document.getElementById("parentTableBody");
-
-        document.getElementById("parentRecordCount").textContent =
-            records.length;
-
-        if (records.length === 0) {
-            tableBody.innerHTML =
-                '<tr><td colspan="6">No parent records found.</td></tr>';
-            return;
-        }
-
-        tableBody.innerHTML = records.map(function (parent) {
-            return `
-                <tr>
-                    <td>${escapeHTML(parent.id || "-")}</td>
-                    <td>${escapeHTML(parent.full_name || "-")}</td>
-                    <td>${escapeHTML(parent.phone || "-")}</td>
-                    <td>${escapeHTML(parent.email || "-")}</td>
-                    <td>${escapeHTML(parent.address || "-")}</td>
-                    <td>—</td>
-                </tr>
-            `;
-        }).join("");
-    }
-
-    // Open the registration form
-    function openParentModal() {
-        document.getElementById("parentModal").style.display = "flex";
-    }
-
-    // Close the registration form
-    function closeParentModal() {
-        document.getElementById("parentModal").style.display = "none";
-    }
-
-    // Register a parent
-    document.getElementById("parentForm").addEventListener(
-        "submit",
-        async function (event) {
-            event.preventDefault();
-
-            if (!schoolId) {
-                alert("Please open this page from a selected school.");
-                return;
-            }
-
-            const parentData = {
-                parent_id: document.getElementById("parentId").value.trim(),
-                full_name: document.getElementById("parentName").value.trim(),
-                phone: document.getElementById("parentPhone").value.trim(),
-                email: document.getElementById("parentEmail").value.trim(),
-                address: document.getElementById("parentAddress").value.trim(),
-                occupation: document.getElementById("parentOccupation").value.trim()
-            };
-
-            const submitButton = this.querySelector(
-                'button[type="submit"]'
-            );
-
-            submitButton.disabled = true;
-            submitButton.textContent = "Registering...";
-
-            try {
-                const response = await fetch(
-                    "/api/schools/" + encodeURIComponent(schoolId) + "/parents",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(parentData)
-                    }
-                );
-
-                const result = await response.json().catch(function () {
-                    return {};
-                });
-
-                if (!response.ok) {
-                    throw new Error(
-                        result.error ||
-                        result.message ||
-                        "Parent registration failed. The backend registration route may not be ready yet."
-                    );
-                }
-
-                alert("Parent registered successfully!");
-
-                document.getElementById("parentForm").reset();
-                closeParentModal();
-                await loadParents();
-
-            } catch (error) {
-                console.error(error);
-                alert(error.message || "Could not register parent.");
-            } finally {
-                submitButton.disabled = false;
-                submitButton.textContent = "Register Parent";
-            }
-        }
-    );
-
-    // Mobile sidebar
-    function toggleSidebar() {
-        document.querySelector(".sidebar").classList.toggle("active");
-    }
-
-    // Start the page
-    setupLinks();
-    loadSchoolInfo();
-    loadParents();
-</script>
-
-(async function loadParentSchool() {
-    const keys = [
-        "schoolId",
-        "selectedSchoolId",
-        "currentSchoolId",
-        "school_id",
-        "selectedSchool"
-    ];
-
-    let schoolId = null;
-
-    for (const key of keys) {
-        const value = localStorage.getItem(key);
-        if (!value || value === "null" || value === "undefined") {
-            continue;
-        }
-
-        try {
-            const parsed = JSON.parse(value);
-            schoolId = typeof parsed === "object"
-                ? parsed?.id || parsed?.schoolId
-                : parsed;
-        } catch {
-            schoolId = value;
-        }
-
-        if (schoolId) break;
-    }
-
-    const textElements = [...document.querySelectorAll("h1,h2,h3,p,div")];
-
-    const schoolHeading = textElements.find(el =>
-        el.children.length === 0 &&
-        /^(No school selected|Please select a school)$/.test(
-            el.textContent.trim()
-        )
-    );
-
-    const addressElement = textElements.find(el =>
-        el.children.length === 0 &&
-        /^(Loading address|School information is unavailable)/.test(
-            el.textContent.trim()
-        )
-    );
-
-    if (!schoolId) {
-        if (schoolHeading) {
-            schoolHeading.textContent = "No school selected";
-        }
-        if (addressElement) {
-            addressElement.textContent =
-                "Please select a school from the school portal first.";
-        }
-        console.error("No school ID found. Check the school selection code.");
-        return;
-    }
-
-    try {
-        const response = await fetch(
-            `/api/schools/${encodeURIComponent(schoolId)}`
-        );
-
-        if (!response.ok) {
-            throw new Error("School API returned HTTP " + response.status);
         }
 
         const result = await response.json();
         const school = result.school || result;
 
-        if (schoolHeading) {
-            schoolHeading.textContent =
-                school.name || school.school_name || "Selected School";
-        }
+        const name = school.name ||
+            school.school_name || "School Portal";
 
-        if (addressElement) {
-            addressElement.textContent =
-                school.address || school.location || "Address unavailable";
-        }
+        heading.textContent = name;
+        sidebarName.textContent = name;
 
-        console.log("School loaded:", school);
+        address.textContent = school.address ||
+            school.location || "Address unavailable";
+
+        subtitle.textContent = "Manage parents at " + name;
+
+        return true;
+
     } catch (error) {
-        console.error("Unable to load school:", error);
+        console.error("Could not load school:", error);
+        heading.textContent = "School information unavailable";
+        address.textContent =
+            "Unable to load school details. Check the server API.";
+        sidebarName.textContent = "School Portal";
+        subtitle.textContent = "Manage parents and guardians";
+        return false;
+    }
+}
+/* LOAD PARENTS FROM THE SERVER */
+async function loadParents() {
+    const tableBody = document.getElementById("parentTableBody");
 
-        if (addressElement) {
-            addressElement.textContent =
-                "Unable to load school details. Check the API connection.";
+    if (!schoolId) {
+        tableBody.innerHTML =
+            '<tr><td colspan="6">Please select a school first.</td></tr>';
+
+        parentRecords = [];
+        updateParentStats();
+        filterParents();
+        return;
+    }
+
+    tableBody.innerHTML =
+        '<tr><td colspan="6">Loading parent records...</td></tr>';
+
+    try {
+        const response = await fetch(
+            "/api/schools/" +
+            encodeURIComponent(schoolId) +
+            "/parents"
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                "Could not load parent records. HTTP " +
+                response.status
+            );
+        }
+
+        const result = await response.json();
+
+        parentRecords = Array.isArray(result)
+            ? result
+            : (
+                Array.isArray(result.parents)
+                    ? result.parents
+                    : (
+                        Array.isArray(result.data)
+                            ? result.data
+                            : []
+                    )
+            );
+
+        updateParentStats();
+        filterParents();
+
+    } catch (error) {
+        console.error("Error loading parents:", error);
+
+        tableBody.innerHTML =
+            '<tr><td colspan="6">Could not load parents. Check the server and API route.</td></tr>';
+
+        document.getElementById("parentRecordCount").textContent = "0";
+    }
+}
+
+/* UPDATE PARENT STATISTICS */
+function updateParentStats() {
+    const withPhone = parentRecords.filter(function (parent) {
+        return Boolean(parent.phone);
+    });
+
+    const withEmail = parentRecords.filter(function (parent) {
+        return Boolean(parent.email);
+    });
+
+    document.getElementById("totalParents").textContent =
+        parentRecords.length;
+
+    document.getElementById("parentsWithPhone").textContent =
+        withPhone.length;
+
+    document.getElementById("parentsWithEmail").textContent =
+        withEmail.length;
+}
+
+/* SEARCH PARENTS */
+function filterParents() {
+    const searchInput = document.getElementById("searchInput");
+
+    const searchTerm = searchInput.value
+        .trim()
+        .toLowerCase();
+
+    const filteredParents = parentRecords.filter(function (parent) {
+        const searchableText = [
+            parent.id,
+            parent.parent_id,
+            parent.full_name,
+            parent.name,
+            parent.phone,
+            parent.email,
+            parent.address,
+            parent.occupation
+        ].join(" ").toLowerCase();
+
+        return searchableText.includes(searchTerm);
+    });
+
+    renderParents(filteredParents);
+}
+
+/* DISPLAY PARENT RECORDS */
+function renderParents(records) {
+    const tableBody = document.getElementById("parentTableBody");
+
+    document.getElementById("parentRecordCount").textContent =
+        records.length;
+
+    if (records.length === 0) {
+        tableBody.innerHTML =
+            '<tr><td colspan="6">No parent records found.</td></tr>';
+        return;
+    }
+
+    tableBody.innerHTML = records.map(function (parent) {
+        return `
+            <tr>
+                <td>${escapeHTML(parent.parent_id || parent.id || "-")}</td>
+                <td>${escapeHTML(parent.full_name || parent.name || "-")}</td>
+                <td>${escapeHTML(parent.phone || "-")}</td>
+                <td>${escapeHTML(parent.email || "-")}</td>
+                <td>${escapeHTML(parent.address || "-")}</td>
+                <td>—</td>
+            </tr>
+        `;
+    }).join("");
+}
+
+/* OPEN AND CLOSE REGISTRATION FORM */
+function openParentModal() {
+    if (!schoolId) {
+        alert(
+            "No school is selected. Open this page from the school portal."
+        );
+        return;
+    }
+
+    document.getElementById("parentModal").style.display = "flex";
+}
+
+function closeParentModal() {
+    document.getElementById("parentModal").style.display = "none";
+}
+
+/* REGISTER A NEW PARENT */
+document.getElementById("parentForm").addEventListener(
+    "submit",
+    async function (event) {
+        event.preventDefault();
+
+        if (!schoolId) {
+            alert(
+                "Please select a school before registering a parent."
+            );
+            return;
+        }
+
+        const parentData = {
+            parent_id: document.getElementById("parentId").value.trim(),
+            full_name: document.getElementById("parentName").value.trim(),
+            phone: document.getElementById("parentPhone").value.trim(),
+            email: document.getElementById("parentEmail").value.trim(),
+            address: document.getElementById("parentAddress").value.trim(),
+            occupation: document.getElementById("parentOccupation").value.trim()
+        };
+
+        const submitButton = this.querySelector(
+            'button[type="submit"]'
+        );
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Registering...";
+
+        try {
+            const response = await fetch(
+                "/api/schools/" +
+                encodeURIComponent(schoolId) +
+                "/parents",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(parentData)
+                }
+            );
+
+            const result = await response.json().catch(function () {
+                return {};
+            });
+
+            if (!response.ok) {
+                throw new Error(
+                    result.error ||
+                    result.message ||
+                    "Parent registration failed. Check the server API."
+                );
+            }
+
+            alert("Parent registered successfully!");
+
+            document.getElementById("parentForm").reset();
+            closeParentModal();
+
+            await loadParents();
+
+        } catch (error) {
+            console.error("Parent registration error:", error);
+
+            alert(
+                error.message ||
+                "Could not register parent. Please try again."
+            );
+
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = "Register Parent";
         }
     }
-})();
+);
+
+/* MOBILE SIDEBAR */
+function toggleSidebar() {
+    const sidebar = document.querySelector(".sidebar");
+
+    if (sidebar) {
+        sidebar.classList.toggle("active");
+    }
+}
+
+/* START THE PAGE */
+async function initializeParentPage() {
+    schoolId = getSelectedSchoolId();
+
+    setupLinks();
+
+    await loadSchoolInfo();
+
+    await loadParents();
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    initializeParentPage();
+});
+
 </script>
 
 </body>
