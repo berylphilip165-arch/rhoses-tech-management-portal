@@ -306,65 +306,110 @@
     }
 
     // Load school information
-    async function loadSchoolInfo() {
-        if (!schoolId) {
-            document.getElementById("schoolName").textContent =
-                "No school selected";
-            return;
-        }
+    
 
-        try {
-            const response = await fetch(
-                "/api/schools/" + encodeURIComponent(schoolId)
-            );
+async function loadSchoolInfo() {
+    const keys = [
+        "selectedSchoolId",
+        "schoolId",
+        "currentSchoolId",
+        "school_id"
+    ];
 
-            if (!response.ok) {
-                throw new Error("Could not load school information.");
+    let schoolId = null;
+
+    for (const key of keys) {
+        const value = localStorage.getItem(key);
+
+        if (value && value !== "null" && value !== "undefined") {
+            try {
+                const parsed = JSON.parse(value);
+
+                schoolId =
+                    typeof parsed === "object" && parsed !== null
+                        ? (parsed.id || parsed.schoolId || parsed.school_id)
+                        : parsed;
+            } catch (error) {
+                schoolId = value;
             }
 
-            const school = await response.json();
-            const name = school.name || school.school_name || "School Portal";
-
-            document.getElementById("schoolName").textContent = name;
-            document.getElementById("sidebarSchoolName").textContent = name;
-            document.getElementById("schoolAddress").textContent =
-                school.address || "Address not provided";
-
-            document.getElementById("schoolSubtitle").textContent =
-                "Manage parents at " + name;
-
-        } catch (error) {
-            console.error(error);
-            document.getElementById("schoolName").textContent =
-                "Unable to load school information";
+            if (schoolId) break;
         }
     }
 
-    // Connect the navigation links to the selected school
-    function setupLinks() {
-        const id = encodeURIComponent(schoolId || "");
+    const heading = document.getElementById("schoolName");
+    const address = document.getElementById("schoolAddress");
 
-        document.getElementById("dashboardLink").href =
-            "school.html?schoolId=" + id;
-
-        document.getElementById("studentsLink").href =
-            "students.html?schoolId=" + id;
-
-        document.getElementById("staffLink").href =
-            "staff.html?schoolId=" + id;
-
-        document.getElementById("classesLink").href =
-            "school.html?schoolId=" + id + "#classes";
-
-        document.getElementById("resultsLink").href =
-            "school.html?schoolId=" + id + "#results";
-
-        document.getElementById("attendanceLink").href =
-            "school.html?schoolId=" + id + "#attendance";
-
-        document.getElementById("feesLink").href =
-            "school.html?schoolId=" + id + "#fees";
+    if (!schoolId) {
+        if (heading) heading.textContent = "No school selected";
+        if (address) address.textContent = "Please select a school first.";
+        return;
     }
+
+    try {
+        const response = await fetch(
+            "/api/schools/" + encodeURIComponent(schoolId)
+        );
+
+        if (!response.ok) {
+            throw new Error("School request failed: " + response.status);
+        }
+
+        const data = await response.json();
+        const school = data.school || data;
+
+        const name = school.name || school.school_name || "School Portal";
+
+        if (heading) heading.textContent = name;
+
+        const sidebarName = document.getElementById("sidebarSchoolName");
+        if (sidebarName) sidebarName.textContent = name;
+
+        if (address) {
+            address.textContent =
+                school.address || school.location || "Address unavailable";
+        }
+
+        const subtitle = document.getElementById("schoolSubtitle");
+        if (subtitle) subtitle.textContent = "Manage parents at " + name;
+
+        const id = encodeURIComponent(schoolId);
+
+        const staffLink = document.getElementById("staffLink");
+        if (staffLink) {
+            staffLink.href = "staff.html?schoolId=" + id;
+        }
+
+        const classesLink = document.getElementById("classesLink");
+        if (classesLink) {
+            classesLink.href = "school.html?schoolId=" + id + "#classes";
+        }
+
+        const resultsLink = document.getElementById("resultsLink");
+        if (resultsLink) {
+            resultsLink.href = "school.html?schoolId=" + id + "#results";
+        }
+
+        const attendanceLink = document.getElementById("attendanceLink");
+        if (attendanceLink) {
+            attendanceLink.href = "school.html?schoolId=" + id + "#attendance";
+        }
+
+        const feesLink = document.getElementById("feesLink");
+        if (feesLink) {
+            feesLink.href = "school.html?schoolId=" + id + "#fees";
+        }
+
+    } catch (error) {
+        console.error("Could not load school:", error);
+
+        if (address) {
+            address.textContent =
+                "Unable to load school details. Check the server API route.";
+        }
+    }
+}
+
 
     // Load parents belonging to this school
     async function loadParents() {
